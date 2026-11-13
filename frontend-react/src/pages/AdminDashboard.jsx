@@ -9,67 +9,112 @@ const DB_KEY = "allcargo_shipments";
 const VISITOR_KEY = "allcargo_visitors";
 const CHAT_KEY = "allcargo_chats";
 
-const networkDataMap = {
-  '1h': {
-    label: 'Last 1 Hour',
-    inbound: '184 MB',
-    outbound: '342 MB',
-    total: '526 MB',
-    latency: '21 ms',
-    pathArea: "M0,75 Q30,65 60,50 T120,60 T180,35 T240,45 T300,20 T360,40 T400,30 L400,100 L0,100 Z",
-    pathLine: "M0,75 Q30,65 60,50 T120,60 T180,35 T240,45 T300,20 T360,40 T400,30",
-    nodes: [
-      { cx: 60, cy: 50, val: '85 MB', time: '14:10' },
-      { cx: 180, cy: 35, val: '142 MB', time: '14:30' },
-      { cx: 300, cy: 20, val: '198 MB', time: '14:45' }
-    ],
-    timeLabels: ['14:00', '14:10', '14:20', '14:30', '14:40', '14:50', '15:00']
-  },
-  '6h': {
-    label: 'Last 6 Hours',
-    inbound: '512 MB',
-    outbound: '984 MB',
-    total: '1.49 GB',
-    latency: '24 ms',
-    pathArea: "M0,85 Q40,55 80,60 T160,40 T240,50 T320,15 T400,45 L400,100 L0,100 Z",
-    pathLine: "M0,85 Q40,55 80,60 T160,40 T240,50 T320,15 T400,45",
-    nodes: [
-      { cx: 80, cy: 60, val: '240 MB', time: '10:00' },
-      { cx: 200, cy: 45, val: '410 MB', time: '12:00' },
-      { cx: 320, cy: 15, val: '620 MB', time: '14:00' }
-    ],
-    timeLabels: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
-  },
-  '24h': {
-    label: 'Last 24 Hours',
-    inbound: '1.24 GB',
-    outbound: '2.47 GB',
-    total: '3.71 GB',
-    latency: '28 ms',
-    pathArea: "M0,80 Q20,60 40,70 T80,50 T120,40 T160,70 T200,60 T240,40 T280,10 T320,50 T360,70 T400,60 L400,100 L0,100 Z",
-    pathLine: "M0,80 Q20,60 40,70 T80,50 T120,40 T160,70 T200,60 T240,40 T280,10 T320,50 T360,70 T400,60",
-    nodes: [
-      { cx: 80, cy: 50, val: '420 MB', time: '18:00' },
-      { cx: 160, cy: 70, val: '210 MB', time: '22:00' },
-      { cx: 280, cy: 10, val: '890 MB', time: '06:00' }
-    ],
-    timeLabels: ['14:00', '18:00', '22:00', '02:00', '06:00', '10:00', '14:00']
-  },
-  '7d': {
-    label: 'Last 7 Days',
-    inbound: '8.92 GB',
-    outbound: '16.45 GB',
-    total: '25.37 GB',
-    latency: '31 ms',
-    pathArea: "M0,90 Q30,70 60,65 T120,45 T180,55 T240,25 T300,40 T360,30 T400,50 L400,100 L0,100 Z",
-    pathLine: "M0,90 Q30,70 60,65 T120,45 T180,55 T240,25 T300,40 T360,30 T400,50",
-    nodes: [
-      { cx: 60, cy: 65, val: '2.1 GB', time: 'Mon' },
-      { cx: 180, cy: 55, val: '3.4 GB', time: 'Wed' },
-      { cx: 300, cy: 40, val: '4.8 GB', time: 'Fri' }
-    ],
-    timeLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+function generateSpline(pts) {
+  if (!pts || pts.length < 2) return '';
+  let d = 'M' + pts[0].x.toFixed(1) + ',' + pts[0].y.toFixed(1);
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i === 0 ? 0 : i - 1];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[i + 2 < pts.length ? i + 2 : i + 1];
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+    d += ' C' + cp1x.toFixed(1) + ',' + cp1y.toFixed(1) + ' ' + cp2x.toFixed(1) + ',' + cp2y.toFixed(1) + ' ' + p2.x.toFixed(1) + ',' + p2.y.toFixed(1);
   }
+  return d;
+}
+
+const pts24 = [
+  {x:0, y:66, inRate: '34.2 MB/s', outRate: '62.4 MB/s'},
+  {x:25, y:69, inRate: '30.5 MB/s', outRate: '58.1 MB/s'},
+  {x:50, y:67, inRate: '33.8 MB/s', outRate: '64.0 MB/s'},
+  {x:75, y:56, inRate: '54.1 MB/s', outRate: '98.5 MB/s'},
+  {x:100, y:46, inRate: '72.4 MB/s', outRate: '138.0 MB/s'},
+  {x:125, y:42, inRate: '82.0 MB/s', outRate: '152.2 MB/s'},
+  {x:150, y:48, inRate: '68.5 MB/s', outRate: '130.4 MB/s'},
+  {x:175, y:44, inRate: '76.2 MB/s', outRate: '146.1 MB/s'},
+  {x:200, y:36, inRate: '94.0 MB/s', outRate: '178.5 MB/s'},
+  {x:225, y:28, inRate: '108.4 MB/s', outRate: '210.2 MB/s'},
+  {x:250, y:34, inRate: '96.5 MB/s', outRate: '182.0 MB/s'},
+  {x:275, y:26, inRate: '114.2 MB/s', outRate: '224.6 MB/s'},
+  {x:300, y:38, inRate: '88.1 MB/s', outRate: '168.0 MB/s'},
+  {x:325, y:45, inRate: '74.0 MB/s', outRate: '140.2 MB/s'},
+  {x:350, y:42, inRate: '82.3 MB/s', outRate: '156.4 MB/s'},
+  {x:375, y:34, inRate: '96.8 MB/s', outRate: '184.2 MB/s'},
+  {x:400, y:32, inRate: '104.5 MB/s', outRate: '198.0 MB/s'}
+];
+
+const pts6 = [
+  {x:0, y:52, inRate: '62.0 MB/s', outRate: '118.2 MB/s'},
+  {x:33, y:48, inRate: '70.4 MB/s', outRate: '132.5 MB/s'},
+  {x:67, y:44, inRate: '78.2 MB/s', outRate: '148.0 MB/s'},
+  {x:100, y:38, inRate: '88.5 MB/s', outRate: '168.4 MB/s'},
+  {x:133, y:32, inRate: '102.1 MB/s', outRate: '196.0 MB/s'},
+  {x:167, y:35, inRate: '95.4 MB/s', outRate: '182.3 MB/s'},
+  {x:200, y:42, inRate: '80.0 MB/s', outRate: '154.1 MB/s'},
+  {x:233, y:39, inRate: '86.2 MB/s', outRate: '164.5 MB/s'},
+  {x:267, y:33, inRate: '98.0 MB/s', outRate: '190.2 MB/s'},
+  {x:300, y:29, inRate: '106.5 MB/s', outRate: '208.0 MB/s'},
+  {x:333, y:36, inRate: '92.3 MB/s', outRate: '176.4 MB/s'},
+  {x:367, y:32, inRate: '100.1 MB/s', outRate: '192.0 MB/s'},
+  {x:400, y:30, inRate: '105.8 MB/s', outRate: '202.4 MB/s'}
+];
+
+const pts1 = [
+  {x:0, y:44, inRate: '46.2 MB/s', outRate: '86.4 MB/s'},
+  {x:33, y:40, inRate: '54.0 MB/s', outRate: '102.1 MB/s'},
+  {x:67, y:46, inRate: '44.5 MB/s', outRate: '82.0 MB/s'},
+  {x:100, y:38, inRate: '58.2 MB/s', outRate: '110.5 MB/s'},
+  {x:133, y:34, inRate: '68.0 MB/s', outRate: '128.2 MB/s'},
+  {x:167, y:42, inRate: '50.1 MB/s', outRate: '94.0 MB/s'},
+  {x:200, y:36, inRate: '62.4 MB/s', outRate: '118.5 MB/s'},
+  {x:233, y:32, inRate: '72.0 MB/s', outRate: '136.0 MB/s'},
+  {x:267, y:38, inRate: '58.5 MB/s', outRate: '110.2 MB/s'},
+  {x:300, y:35, inRate: '64.2 MB/s', outRate: '122.4 MB/s'},
+  {x:333, y:40, inRate: '54.8 MB/s', outRate: '102.0 MB/s'},
+  {x:367, y:33, inRate: '70.2 MB/s', outRate: '132.5 MB/s'},
+  {x:400, y:31, inRate: '74.5 MB/s', outRate: '140.0 MB/s'}
+];
+
+const pts7 = [
+  {x:0, y:56, inRate: '1.1 GB/h', outRate: '2.1 GB/h'},
+  {x:57, y:48, inRate: '1.3 GB/h', outRate: '2.4 GB/h'},
+  {x:114, y:42, inRate: '1.5 GB/h', outRate: '2.8 GB/h'},
+  {x:171, y:35, inRate: '1.8 GB/h', outRate: '3.4 GB/h'},
+  {x:228, y:32, inRate: '1.9 GB/h', outRate: '3.6 GB/h'},
+  {x:285, y:58, inRate: '1.0 GB/h', outRate: '1.9 GB/h'},
+  {x:342, y:52, inRate: '1.2 GB/h', outRate: '2.2 GB/h'},
+  {x:400, y:38, inRate: '1.6 GB/h', outRate: '3.1 GB/h'}
+];
+
+const makeTelemetryConfig = (label, inbound, inboundTrend, outbound, outboundTrend, total, packets, latency, pts) => {
+  const line = generateSpline(pts);
+  const ptsOut = pts.map(p => ({ x: p.x, y: Math.min(85, p.y + 12) }));
+  const lineOut = generateSpline(ptsOut);
+  return {
+    label,
+    inbound,
+    inboundTrend,
+    outbound,
+    outboundTrend,
+    total,
+    packets,
+    latency,
+    pts,
+    pathLine: line,
+    pathArea: line + ' L400,100 L0,100 Z',
+    pathLineOut: lineOut,
+    lastPoint: pts[pts.length - 1]
+  };
+};
+
+const networkDataMap = {
+  '1h': makeTelemetryConfig('Last 1 Hour', '184 MB', '+1.8%', '342 MB', '+2.6%', '526 MB', '192K pkts', '21 ms', pts1),
+  '6h': makeTelemetryConfig('Last 6 Hours', '512 MB', '+3.1%', '984 MB', '+4.7%', '1.49 GB', '840K pkts', '24 ms', pts6),
+  '24h': makeTelemetryConfig('Last 24 Hours', '1.24 GB', '+5.4%', '2.47 GB', '+8.2%', '3.71 GB', '2.84M pkts', '26 ms', pts24),
+  '7d': makeTelemetryConfig('Last 7 Days', '8.92 GB', '+12.4%', '16.45 GB', '+15.8%', '25.37 GB', '18.2M pkts', '29 ms', pts7)
 };
 
 const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-110m.json";
@@ -155,6 +200,87 @@ export default function AdminDashboard() {
   const [networkTimeframe, setNetworkTimeframe] = useState("24h");
   const [isNetworkDropdownOpen, setIsNetworkDropdownOpen] = useState(false);
   const [activeChartHover, setActiveChartHover] = useState(null);
+  const [chartHover, setChartHover] = useState(null);
+
+  // Live Telemetry Heartbeat (realistic gentle micro-fluctuations)
+  useEffect(() => {
+    const tickInterval = setInterval(() => {
+      setLiveLatency(prev => {
+        const delta = Math.round((Math.random() - 0.5) * 4);
+        return Math.max(22, Math.min(31, (prev || 26) + delta));
+      });
+    }, 3200);
+    return () => clearInterval(tickInterval);
+  }, []);
+
+  const getDynamicTimeLabels = (timeframe) => {
+    const now = new Date();
+    if (timeframe === '1h') {
+      return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(now.getTime() - (6 - i) * 10 * 60000);
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+      });
+    }
+    if (timeframe === '6h') {
+      return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(now.getTime() - (6 - i) * 60 * 60000);
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+      });
+    }
+    if (timeframe === '24h') {
+      return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(now.getTime() - (6 - i) * 4 * 3600000);
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+      });
+    }
+    if (timeframe === '7d') {
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(now.getTime() - (6 - i) * 86400000);
+        return i === 6 ? 'Today' : days[d.getDay()];
+      });
+    }
+    return [];
+  };
+
+  const handleChartMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseX = Math.max(0, Math.min(400, ((e.clientX - rect.left) / rect.width) * 400));
+    const activeData = networkDataMap[networkTimeframe];
+    if (!activeData || !activeData.pts) return;
+
+    let closest = activeData.pts[0];
+    let minDiff = 9999;
+    activeData.pts.forEach(p => {
+      const diff = Math.abs(p.x - mouseX);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closest = p;
+      }
+    });
+
+    const now = new Date();
+    const fraction = closest.x / 400;
+    let msAgo = 0;
+    if (networkTimeframe === '1h') msAgo = (1 - fraction) * 3600000;
+    else if (networkTimeframe === '6h') msAgo = (1 - fraction) * 6 * 3600000;
+    else if (networkTimeframe === '24h') msAgo = (1 - fraction) * 24 * 3600000;
+    else if (networkTimeframe === '7d') msAgo = (1 - fraction) * 7 * 86400000;
+    
+    const pointDate = new Date(now.getTime() - msAgo);
+    let timeLabel = pointDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) + ' GMT';
+    if (networkTimeframe === '7d') {
+      timeLabel = pointDate.toLocaleDateString([], { weekday: 'short', month: 'numeric', day: 'numeric' });
+    }
+
+    setChartHover({
+      x: closest.x,
+      y: closest.y,
+      inRate: closest.inRate,
+      outRate: closest.outRate,
+      timeLabel
+    });
+  };
 
   // Alerts State
   const [isAlertsModalOpen, setIsAlertsModalOpen] = useState(false);
@@ -720,10 +846,16 @@ export default function AdminDashboard() {
                 {/* Network Activity */}
                 <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] flex flex-col hover:border-green-200 transition-all relative">
                   <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-slate-900 font-bold flex items-center gap-2 text-md">
-                      <span className="material-symbols-outlined text-green-500 text-xl">show_chart</span> 
-                      Network Activity
-                    </h3>
+                    <div className="flex items-center gap-2.5">
+                      <h3 className="text-slate-900 font-bold flex items-center gap-2 text-md">
+                        <span className="material-symbols-outlined text-green-500 text-xl">show_chart</span> 
+                        Network Activity
+                      </h3>
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-700 border border-green-200">
+                        <span className="size-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                        LIVE
+                      </span>
+                    </div>
                     
                     {/* Timeframe selector dropdown */}
                     <div className="relative">
@@ -745,6 +877,7 @@ export default function AdminDashboard() {
                                 onClick={() => {
                                   setNetworkTimeframe(key);
                                   setIsNetworkDropdownOpen(false);
+                                  setChartHover(null);
                                 }}
                                 className={`px-3 py-1.5 text-xs text-left font-semibold transition-colors cursor-pointer ${networkTimeframe === key ? 'text-green-600 bg-green-50' : 'text-slate-600 hover:bg-slate-50'}`}
                               >
@@ -758,68 +891,162 @@ export default function AdminDashboard() {
                   </div>
                   
                   {/* Dynamic SVG Chart Area */}
-                  <div className="flex-1 relative h-32 w-full mt-2 border-b border-slate-100 pb-2">
-                     <svg viewBox="0 0 400 100" className="w-full h-full preserve-3d" preserveAspectRatio="none">
+                  <div 
+                    className="flex-1 relative h-36 w-full mt-1 border-b border-slate-100 pb-5 select-none cursor-crosshair"
+                    onMouseMove={handleChartMouseMove}
+                    onMouseLeave={() => setChartHover(null)}
+                  >
+                     <svg viewBox="0 0 400 100" className="w-full h-full overflow-visible" preserveAspectRatio="none">
                         <defs>
                           <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
-                            <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                            <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
+                            <stop offset="60%" stopColor="#10b981" stopOpacity="0.08" />
+                            <stop offset="100%" stopColor="#10b981" stopOpacity="0.00" />
                           </linearGradient>
+                          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#10b981" floodOpacity="0.3" />
+                          </filter>
                         </defs>
+
+                        {/* Subtle Horizontal Telemetry Gridlines */}
+                        <line x1="0" y1="25" x2="400" y2="25" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                        <text x="4" y="22" fill="#94a3b8" fontSize="7" fontFamily="monospace" opacity="0.7">120 MB/s</text>
+
+                        <line x1="0" y1="50" x2="400" y2="50" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                        <text x="4" y="47" fill="#94a3b8" fontSize="7" fontFamily="monospace" opacity="0.7">60 MB/s</text>
+
+                        <line x1="0" y1="75" x2="400" y2="75" stroke="#f1f5f9" strokeWidth="1" strokeDasharray="3 3" />
+                        <text x="4" y="72" fill="#94a3b8" fontSize="7" fontFamily="monospace" opacity="0.7">20 MB/s</text>
+
+                        {/* Secondary Outbound Telemetry Stream (Dashed Curve) */}
+                        <path 
+                          d={networkDataMap[networkTimeframe].pathLineOut} 
+                          fill="none" 
+                          stroke="#0d9488" 
+                          strokeWidth="1.5" 
+                          strokeDasharray="4 3" 
+                          opacity="0.4" 
+                        />
+
+                        {/* Primary Area Fill */}
                         <path d={networkDataMap[networkTimeframe].pathArea} fill="url(#chartGrad)" />
-                        <path d={networkDataMap[networkTimeframe].pathLine} fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
-                        
-                        {/* Interactive Data Points with Tooltips */}
-                        {networkDataMap[networkTimeframe].nodes.map((node, i) => (
-                          <g 
-                            key={i} 
-                            className="cursor-pointer group" 
-                            onMouseEnter={() => setActiveChartHover(node)} 
-                            onMouseLeave={() => setActiveChartHover(null)}
-                          >
-                            <circle cx={node.cx} cy={node.cy} r="7" fill="#10b981" opacity="0.2" className="animate-ping" />
-                            <circle cx={node.cx} cy={node.cy} r="4" fill="white" stroke="#10b981" strokeWidth="2.5" />
+
+                        {/* Primary Inbound Telemetry Stream */}
+                        <path 
+                          d={networkDataMap[networkTimeframe].pathLine} 
+                          fill="none" 
+                          stroke="#10b981" 
+                          strokeWidth="2.5" 
+                          strokeLinecap="round" 
+                          filter="url(#glow)"
+                        />
+
+                        {/* Interactive Scrubbing Cursor / Snap Point */}
+                        {chartHover ? (
+                          <g>
+                            <line 
+                              x1={chartHover.x} 
+                              y1="10" 
+                              x2={chartHover.x} 
+                              y2="100" 
+                              stroke="#94a3b8" 
+                              strokeWidth="1" 
+                              strokeDasharray="3 3" 
+                            />
+                            <circle cx={chartHover.x} cy={chartHover.y} r="8" fill="#10b981" opacity="0.25" className="animate-ping" />
+                            <circle cx={chartHover.x} cy={chartHover.y} r="4.5" fill="white" stroke="#10b981" strokeWidth="2.5" />
                           </g>
-                        ))}
+                        ) : (
+                          /* Live Beacon at the rightmost edge */
+                          <g>
+                            <circle 
+                              cx={networkDataMap[networkTimeframe].lastPoint.x} 
+                              cy={networkDataMap[networkTimeframe].lastPoint.y} 
+                              r="7" 
+                              fill="#10b981" 
+                              opacity="0.3" 
+                              className="animate-ping" 
+                            />
+                            <circle 
+                              cx={networkDataMap[networkTimeframe].lastPoint.x} 
+                              cy={networkDataMap[networkTimeframe].lastPoint.y} 
+                              r="4" 
+                              fill="white" 
+                              stroke="#10b981" 
+                              strokeWidth="2.5" 
+                            />
+                          </g>
+                        )}
                      </svg>
 
-                     {/* Floating tooltip */}
-                     {activeChartHover && (
+                     {/* Floating Rich Tooltip */}
+                     {chartHover && (
                         <div 
-                          className="absolute pointer-events-none bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg shadow-xl transform -translate-x-1/2 -translate-y-8 transition-all z-20"
-                          style={{ left: `${(activeChartHover.cx / 400) * 100}%`, top: `${(activeChartHover.cy / 100) * 100}%` }}
+                          className="absolute pointer-events-none bg-slate-900/95 backdrop-blur-md text-white text-[11px] p-2.5 rounded-xl shadow-2xl border border-slate-700/50 z-30 transition-all duration-75 flex flex-col gap-1 min-w-[135px]"
+                          style={{ 
+                            left: `${Math.min(80, Math.max(20, (chartHover.x / 400) * 100))}%`, 
+                            top: `${Math.max(0, (chartHover.y / 100) * 75 - 45)}%`,
+                            transform: 'translate(-50%, -100%)'
+                          }}
                         >
-                          {activeChartHover.time}: {activeChartHover.val}
+                          <div className="flex items-center justify-between border-b border-slate-700/60 pb-1 text-[10px] text-slate-400 font-mono">
+                            <span>{chartHover.timeLabel}</span>
+                            <span className="text-emerald-400 font-bold">{liveLatency} ms</span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs font-semibold pt-0.5">
+                            <span className="text-slate-300 flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-emerald-400"></span>In:</span>
+                            <span className="text-white font-mono">{chartHover.inRate}</span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs font-semibold">
+                            <span className="text-slate-300 flex items-center gap-1.5"><span className="size-1.5 rounded-full bg-teal-400"></span>Out:</span>
+                            <span className="text-white font-mono">{chartHover.outRate}</span>
+                          </div>
                         </div>
                      )}
                      
-                     <div className="absolute bottom-0 left-0 w-full flex justify-between text-[8px] text-slate-400 font-mono mt-1 px-1">
-                       {networkDataMap[networkTimeframe].timeLabels.map((lbl, idx) => (
+                     {/* Dynamic Time Labels */}
+                     <div className="absolute bottom-0 left-0 w-full flex justify-between text-[8px] text-slate-400 font-mono px-1">
+                       {getDynamicTimeLabels(networkTimeframe).map((lbl, idx) => (
                          <span key={idx}>{lbl}</span>
                        ))}
                      </div>
                   </div>
 
-                  <div className="flex justify-between items-center mt-4">
+                  {/* Real-time stats row with authentic trends & indicators */}
+                  <div className="grid grid-cols-4 gap-2 mt-4 pt-1">
                     <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Inbound</p>
-                      <p className="text-slate-900 font-bold text-sm flex items-center gap-1">
-                        <span className="material-symbols-outlined text-green-500 text-[14px]">arrow_downward</span> {networkDataMap[networkTimeframe].inbound}
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Inbound</p>
+                      <p className="text-slate-900 font-black text-sm flex items-center gap-0.5">
+                        <span className="material-symbols-outlined text-green-500 text-[15px]">arrow_downward</span> {networkDataMap[networkTimeframe].inbound}
                       </p>
+                      <div className="flex items-center gap-1 text-[10px] font-bold text-green-600 mt-0.5">
+                        <span className="material-symbols-outlined text-[13px]">trending_up</span>{networkDataMap[networkTimeframe].inboundTrend} <span className="text-slate-400 font-normal text-[9px]">avg</span>
+                      </div>
                     </div>
+                    
                     <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Outbound</p>
-                      <p className="text-slate-900 font-bold text-sm flex items-center gap-1">
-                        <span className="material-symbols-outlined text-green-500 text-[14px]">arrow_upward</span> {networkDataMap[networkTimeframe].outbound}
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Outbound</p>
+                      <p className="text-slate-900 font-black text-sm flex items-center gap-0.5">
+                        <span className="material-symbols-outlined text-green-500 text-[15px]">arrow_upward</span> {networkDataMap[networkTimeframe].outbound}
                       </p>
+                      <div className="flex items-center gap-1 text-[10px] font-bold text-green-600 mt-0.5">
+                        <span className="material-symbols-outlined text-[13px]">trending_up</span>{networkDataMap[networkTimeframe].outboundTrend} <span className="text-slate-400 font-normal text-[9px]">peak</span>
+                      </div>
                     </div>
+
                     <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Total Traffic</p>
-                      <p className="text-slate-900 font-bold text-sm">{networkDataMap[networkTimeframe].total}</p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Total Traffic</p>
+                      <p className="text-slate-900 font-black text-sm">{networkDataMap[networkTimeframe].total}</p>
+                      <p className="text-[10px] text-slate-400 font-medium mt-0.5">{networkDataMap[networkTimeframe].packets}</p>
                     </div>
+
                     <div>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Avg. Latency</p>
-                      <p className="text-slate-900 font-bold text-sm">{networkDataMap[networkTimeframe].latency}</p>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Avg. Latency</p>
+                      <p className="text-slate-900 font-black text-sm">{liveLatency} ms</p>
+                      <div className="flex items-center gap-1 text-[10px] text-green-600 font-bold mt-0.5">
+                        <span className="size-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                        Optimal
+                      </div>
                     </div>
                   </div>
                 </div>
