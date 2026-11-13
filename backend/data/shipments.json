@@ -5,7 +5,17 @@
     "destination": "London",
     "status": "In Transit",
     "location": "34.05N, 118.24W",
-    "weight": "450",
+    "weight": "450 kg",
     "transportMode": "Air"
+  },
+  {
+    "id": "AH99887766K",
+    "origin": "Tokyo, Japan",
+    "destination": "Los Angeles, USA",
+    "status": "In Transit",
+    "packageName": "Precision Optics",
+    "weight": "12.5 kg",
+    "transportMode": "Air",
+    "packageMediaType": "image"
   }
 ]

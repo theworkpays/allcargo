@@ -172,7 +172,13 @@ export default function AdminDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date().toUTCString());
   
   // Data State
-  const [shipments, setShipments] = useState([]);
+  const [shipments, setShipments] = useState(() => {
+    try {
+      const cached = localStorage.getItem(DB_KEY);
+      if (cached) return JSON.parse(cached);
+    } catch(e) {}
+    return [];
+  });
   const [visitors, setVisitors] = useState([]);
   const [chats, setChats] = useState({});
   const [trafficHistory, setTrafficHistory] = useState(new Array(20).fill(0));

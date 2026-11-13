@@ -138,7 +138,13 @@ export default function Tracking() {
     setTimeout(async () => {
       try {
         const res = await fetch(`/api/shipments?id=${searchId}`);
-        const foundLocal = res.ok ? await res.json() : null;
+        let foundLocal = res.ok ? await res.json() : null;
+        if (!foundLocal) {
+          try {
+            const cachedList = JSON.parse(localStorage.getItem('allcargo_shipments') || '[]');
+            foundLocal = cachedList.find(s => s && (s.id === searchId || s.id?.toLowerCase() === searchId.toLowerCase()));
+          } catch(e) {}
+        }
         const foundMock = mockShipmentData[searchId];
 
         if (foundMock) {

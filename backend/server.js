@@ -11,7 +11,8 @@ const DATA_DIR = path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'shipments.json');
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '100mb' }));
+app.use(express.urlencoded({ limit: '100mb', extended: true }));
 
 // Request Logger
 app.use((req, res, next) => {
@@ -52,8 +53,15 @@ app.get('/api/shipments', (req, res) => {
     res.json(db);
 });
 app.post('/api/shipments', (req, res) => {
-    writeDB(req.body);
-    res.json({ success: true });
+    try {
+        writeDB(req.body);
+        const count = Array.isArray(req.body) ? req.body.length : 1;
+        console.log(`[${new Date().toLocaleTimeString()}] Saved ${count} shipment(s) to ledger`);
+        res.json({ success: true, count });
+    } catch (err) {
+        console.error("Failed to write shipments to DB:", err);
+        res.status(500).json({ error: "Failed to persist shipments" });
+    }
 });
 
 // 3. Chat Endpoint (Matches Vercel /api/chat)
