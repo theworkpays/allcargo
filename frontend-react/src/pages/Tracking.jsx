@@ -70,6 +70,22 @@ const mockShipmentData = {
   }
 };
 
+
+const getTransportIcon = (type) => {
+  if (!type) return 'flight';
+  const t = type.toLowerCase();
+  if (t.includes('sea') || t.includes('ocean') || t.includes('boat') || t.includes('ship') || t.includes('vessel')) {
+    return 'directions_boat';
+  }
+  if (t.includes('road') || t.includes('truck') || t.includes('ground') || t.includes('land')) {
+    return 'local_shipping';
+  }
+  if (t.includes('rail') || t.includes('train')) {
+    return 'train';
+  }
+  return 'flight';
+};
+
 export default function Tracking() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -79,6 +95,29 @@ export default function Tracking() {
   const [shipment, setShipment] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [copiedId, setCopiedId] = useState(false);
+  const [toastText, setToastText] = useState(null);
+
+  const triggerToast = (msg) => {
+    setToastText(msg);
+    setTimeout(() => setToastText(null), 3000);
+  };
+
+  const handleCopyTrackingId = (trackingId) => {
+    navigator.clipboard.writeText(trackingId);
+    setCopiedId(true);
+    triggerToast('Tracking ID copied to clipboard');
+    setTimeout(() => setCopiedId(false), 2000);
+  };
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    triggerToast('Tracking link copied to clipboard');
+  };
+
+  const handleSubscribeAlerts = (trackingId) => {
+    triggerToast(`Subscribed to live notifications for ${trackingId}`);
+  };
 
   useEffect(() => {
     if (id) {
@@ -225,7 +264,7 @@ export default function Tracking() {
          <div className="absolute top-0 left-0 w-full h-full bg-[url('/tracking-bg.png')] bg-top bg-no-repeat bg-cover sm:bg-contain opacity-90"></div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10 pt-12">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10 pt-8 sm:pt-12">
         
         {/* Hero Section */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10 mb-12 print:hidden">
@@ -287,84 +326,161 @@ export default function Tracking() {
             id="pdf-content"
           >
             {/* Top Card: Header & Grid */}
-            <div className="bg-white rounded-3xl shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-slate-100 overflow-hidden">
+            <div className="bg-white rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-slate-100 overflow-hidden">
               
               {/* Header */}
-              <div className="p-6 md:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-primary shrink-0 shadow-sm">
-                     <span className="material-symbols-outlined text-3xl">directions_boat</span>
+              <div className="p-5 sm:p-6 md:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-5 border-b border-slate-100 bg-white">
+                <div className="flex items-center gap-3.5 sm:gap-4">
+                  <div className="size-12 sm:size-14 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-xs">
+                     <span className="material-symbols-outlined text-2xl sm:text-3xl">{getTransportIcon(shipment.transportMode?.type)}</span>
                   </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                       <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Shipment {shipment.id}</h2>
-                       <button className="text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center justify-center">
-                          <span className="material-symbols-outlined text-[20px]">content_copy</span>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                       <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight font-display whitespace-nowrap">
+                         Shipment {shipment.id}
+                       </h2>
+                       <button 
+                         onClick={() => handleCopyTrackingId(shipment.id)} 
+                         className="size-7 rounded-lg bg-slate-50 hover:bg-emerald-50 text-slate-400 hover:text-emerald-600 border border-slate-200/70 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                         title="Copy Tracking ID"
+                       >
+                          <span className="material-symbols-outlined text-[16px]">{copiedId ? 'check' : 'content_copy'}</span>
                        </button>
                     </div>
-                    <div className="flex items-center gap-3 text-sm">
-                       <span className="px-2.5 py-1 rounded-md bg-primary/10 text-primary font-bold text-xs">
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                       <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/70 font-bold text-[11px]">
+                          <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                           {shipment.status}
                        </span>
-                       <span className="text-slate-400 font-medium">• Last updated: {shipment.lastUpdated}</span>
+                       <span className="text-slate-400 font-medium text-[11px] sm:text-xs">
+                         • Last updated: {shipment.lastUpdated || 'Just now'}
+                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div id="download-btn-container" className="flex flex-wrap items-center gap-3 print:hidden">
-                   <button onClick={() => { navigator.clipboard.writeText(window.location.href); alert('Tracking link copied to clipboard!'); }} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer">
-                     <span className="material-symbols-outlined text-[18px]">share</span> Share
+                {/* Mobile-optimized action buttons in 1 single clean row */}
+                <div id="download-btn-container" className="grid grid-cols-3 sm:flex sm:items-center gap-2 sm:gap-3 w-full lg:w-auto print:hidden">
+                   <button 
+                     onClick={handleShare} 
+                     className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs sm:text-sm hover:border-slate-300 transition-all cursor-pointer shadow-xs active:scale-95"
+                   >
+                     <span className="material-symbols-outlined text-[16px] sm:text-[18px] text-slate-500">share</span> 
+                     <span>Share</span>
                    </button>
-                   <button onClick={downloadPDF} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer">
-                     <span className="material-symbols-outlined text-[18px]">download</span> Download
+                   
+                   <button 
+                     onClick={downloadPDF} 
+                     className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs sm:text-sm hover:border-slate-300 transition-all cursor-pointer shadow-xs active:scale-95"
+                   >
+                     <span className="material-symbols-outlined text-[16px] sm:text-[18px] text-slate-500">download</span> 
+                     <span>Download</span>
                    </button>
-                   <button onClick={() => alert(`You are now subscribed to alerts for shipment ${shipment.id}`)} className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer">
-                     <span className="material-symbols-outlined text-[18px]">notifications_active</span> Get Alerts
+                   
+                   <button 
+                     onClick={() => handleSubscribeAlerts(shipment.id)} 
+                     className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs sm:text-sm shadow-sm shadow-emerald-500/20 transition-all cursor-pointer active:scale-95"
+                   >
+                     <span className="material-symbols-outlined text-[16px] sm:text-[18px]">notifications_active</span> 
+                     <span>Alerts</span>
                    </button>
                 </div>
               </div>
 
-              {/* Grid Info */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-6 gap-x-2 lg:gap-y-0 lg:divide-x divide-slate-100 p-6 md:p-8">
-                {/* 1. Origin */}
-                <div className="lg:px-4 px-2 first:pl-0 lg:last:pr-0">
-                  <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold mb-1">
-                    <span className="material-symbols-outlined text-[16px] text-primary">location_on</span> Origin
+              {/* Route Corridor Banner: Origin ── ✈ ── Destination */}
+              <div className="bg-slate-50/60 border-b border-slate-100 p-4 sm:p-6">
+                <div className="flex items-center justify-between gap-2 sm:gap-6 relative">
+                  
+                  {/* Origin */}
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <div className="size-9 sm:size-11 rounded-xl bg-white border border-emerald-200/90 shadow-xs flex items-center justify-center text-emerald-600 shrink-0">
+                      <span className="material-symbols-outlined text-lg sm:text-xl">flight_takeoff</span>
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        <span className="size-1.5 rounded-full bg-emerald-500"></span> Origin
+                      </div>
+                      <p className="font-bold text-slate-900 text-sm sm:text-base truncate">{shipment.origin.city}</p>
+                      <p className="text-[10px] sm:text-xs text-slate-400 font-medium truncate">{shipment.origin.date || 'Departed'}</p>
+                    </div>
                   </div>
-                  <p className="font-bold text-slate-900 text-sm sm:text-base mb-1">{shipment.origin.city}</p>
-                  <p className="text-[10px] sm:text-xs text-slate-500 font-medium">{shipment.origin.date}</p>
+
+                  {/* Visual Route Corridor Track */}
+                  <div className="flex-1 flex flex-col items-center px-1 sm:px-6 relative">
+                    <div className="w-full flex items-center relative py-2">
+                      <div className="h-1 w-full bg-slate-200/80 relative overflow-hidden rounded-full">
+                        <div className="absolute inset-y-0 left-0 bg-emerald-500 w-3/5 rounded-full animate-pulse"></div>
+                      </div>
+                      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 size-7 sm:size-8 rounded-full bg-white border border-emerald-300 shadow-md flex items-center justify-center text-emerald-600">
+                        <span className="material-symbols-outlined text-[15px] sm:text-[18px] rotate-45">
+                          {getTransportIcon(shipment.transportMode?.type)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5 mt-1">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200/70">
+                        <span className="size-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        En Route
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Destination */}
+                  <div className="flex items-center gap-2 sm:gap-3 text-right min-w-0 flex-row-reverse">
+                    <div className="size-9 sm:size-11 rounded-xl bg-white border border-blue-200/90 shadow-xs flex items-center justify-center text-blue-600 shrink-0">
+                      <span className="material-symbols-outlined text-lg sm:text-xl">flight_land</span>
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center justify-end gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        Destination <span className="size-1.5 rounded-full bg-blue-500"></span>
+                      </div>
+                      <p className="font-bold text-slate-900 text-sm sm:text-base truncate">{shipment.destination.city}</p>
+                      <p className="text-[10px] sm:text-xs text-slate-400 font-medium truncate">{shipment.destination.date || 'Pending'}</p>
+                    </div>
+                  </div>
+
                 </div>
-                {/* 2. Destination */}
-                <div className="lg:px-4 px-2">
-                  <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold mb-1">
-                    <span className="material-symbols-outlined text-[16px] text-primary">pin_drop</span> Destination
+              </div>
+
+              {/* 3 Balanced Spec Metrics: Est Delivery, Transport Mode, Location */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 p-4 sm:p-6 bg-white">
+                {/* 1. Est Delivery */}
+                <div className="py-3 sm:py-0 sm:px-4 sm:first:pl-0 flex items-center gap-3.5">
+                  <div className="size-10 rounded-xl bg-emerald-50/70 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                    <span className="material-symbols-outlined text-xl">calendar_month</span>
                   </div>
-                  <p className="font-bold text-slate-900 text-sm sm:text-base mb-1">{shipment.destination.city}</p>
-                  <p className="text-[10px] sm:text-xs text-slate-500 font-medium">{shipment.destination.date}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Est. Delivery</p>
+                    <p className="font-bold text-slate-900 text-sm truncate">{shipment.eta.date || 'Pending'}</p>
+                    <p className="text-[10px] text-slate-400 font-medium">{shipment.eta.time || 'Allcargo Priority SLA'}</p>
+                  </div>
                 </div>
-                {/* 3. Est Delivery */}
-                <div className="lg:px-4 px-2">
-                  <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold mb-1">
-                    <span className="material-symbols-outlined text-[16px] text-primary">calendar_today</span> Est. Delivery
+
+                {/* 2. Transport Mode */}
+                <div className="py-3 sm:py-0 sm:px-4 flex items-center gap-3.5">
+                  <div className="size-10 rounded-xl bg-blue-50/70 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                    <span className="material-symbols-outlined text-xl">{getTransportIcon(shipment.transportMode?.type)}</span>
                   </div>
-                  <p className="font-bold text-slate-900 text-sm sm:text-base mb-1">{shipment.eta.date}</p>
-                  <p className="text-[10px] sm:text-xs text-slate-500 font-medium">{shipment.eta.time}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Transport Mode</p>
+                    <p className="font-bold text-slate-900 text-sm truncate">{shipment.transportMode.type}</p>
+                    <p className="text-[10px] text-slate-400 font-medium">{shipment.transportMode.carrier || 'Allcargo Fleet'}</p>
+                  </div>
                 </div>
-                {/* 4. Transport Mode */}
-                <div className="lg:px-4 px-2">
-                  <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold mb-1">
-                    <span className="material-symbols-outlined text-[16px] text-primary">directions_boat</span> Transport Mode
+
+                {/* 3. Live Position */}
+                <div className="py-3 sm:py-0 sm:px-4 sm:last:pr-0 flex items-center gap-3.5">
+                  <div className="size-10 rounded-xl bg-purple-50/70 border border-purple-100 flex items-center justify-center text-purple-600 shrink-0">
+                    <span className="material-symbols-outlined text-xl">near_me</span>
                   </div>
-                  <p className="font-bold text-slate-900 text-sm sm:text-base mb-1">{shipment.transportMode.type}</p>
-                  <p className="text-[10px] sm:text-xs text-slate-500 font-medium">{shipment.transportMode.carrier}</p>
-                </div>
-                {/* 5. Current Location */}
-                <div className="lg:px-4 px-2">
-                  <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold mb-1">
-                    <span className="material-symbols-outlined text-[16px] text-primary">near_me</span> Current Location
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Current Coordinates</p>
+                    <p className="font-bold text-slate-900 text-sm truncate font-mono">{shipment.currentLocation.place}</p>
+                    <p className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                      <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      Live GPS Signal
+                    </p>
                   </div>
-                  <p className="font-bold text-slate-900 text-sm sm:text-base mb-1">{shipment.currentLocation.place}</p>
-                  <p className="text-[10px] sm:text-xs text-slate-500 font-medium">{shipment.currentLocation.updated}</p>
                 </div>
               </div>
             </div>
