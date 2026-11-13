@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Enterprise Logistics Services | Allcargo Solutions</title>
+
+    <!-- Google Fonts & Material Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Global Custom CSS -->
+    <link rel="stylesheet" href="assets/css/global.css">
+
+    <!-- Component Loader -->
+    <script src="assets/js/components.js" defer></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df2df",
+                        "background-dark": "#102221",
+                        "surface-dark": "#183432",
+                        "border-dark": "#224946",
+                    },
+                    fontFamily: { "display": ["Space Grotesk", "sans-serif"] },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-dark font-display text-white antialiased overflow-x-hidden">
+    <!-- GLOBAL PAGE LOADER -->
+<div id="global-loader">
+    <div class="loader-content">
+        <div class="loader-logo">ALLCARGO</div>
+        <div class="loader-bar-wrapper">
+            <div class="loader-bar"></div>
+        </div>
+        <div class="loader-status">INITIALIZING PROTOCOLS...</div>
+    </div>
+</div>
+    <!-- Dynamic Background: Moving Nodes -->
+    <div class="fixed inset-0 z-0 opacity-20 bg-grid-pattern grid-bg pointer-events-none"></div>
+    <div class="fixed top-[-10%] right-[-10%] size-[500px] bg-primary/10 rounded-full blur-[120px] animate-pulse pointer-events-none"></div>
+
+    <!-- Shared Navigation -->
+    <div id="navbar-placeholder"></div>
+
+    <main class="pt-20 relative z-10">
+        
+        <!-- Hero Section: Service Ecosystem -->
+        <section class="relative py-20 lg:py-32 px-6 flex flex-col items-center text-center overflow-hidden">
+            <div class="max-w-4xl space-y-6 animate-fade-in">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-[10px] font-bold uppercase tracking-widest">
+                    <span class="material-symbols-outlined text-sm">bolt</span>
+                    Mach-Speed Operational Capacity
+                </div>
+                <h1 class="text-5xl lg:text-8xl font-black uppercase leading-[0.9] tracking-tighter">
+                    Global Transport <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Ecosystem</span>
+                </h1>
+                <p class="text-slate-400 text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
+                    Allcargo provides a full-spectrum logistics architecture, integrating autonomous hardware with predictive AI to move assets across borders in record time.
+                </p>
+                <div class="pt-8">
+                    <button class="bg-primary text-slate-900 font-bold px-10 py-4 rounded-full shadow-neon hover:scale-105 transition-all">
+                        Initialize Service Request
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Services Grid -->
+        <section class="max-w-7xl mx-auto px-6 py-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Service 1: Intermodal Intelligence -->
+                <div class="group glass-panel p-10 rounded-[2rem] hover:border-primary transition-all duration-500 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 size-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/20 transition-all"></div>
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block group-hover:rotate-12 transition-transform">package_2</span>
+                    <h3 class="text-2xl font-bold mb-4">Intermodal Intelligence</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Unified air, sea, and land logistics. Our AI-engine calculates volumetric weights and optimizes cargo loads across multiple carriers for maximum cost-efficiency.
+                    </p>
+                    <ul class="space-y-3 text-xs font-medium text-slate-300">
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Multi-Carrier Synchronization</li>
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Dynamic Route Rerouting</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2: Cold-Chain Bio-Logistics -->
+                <div class="group glass-panel p-10 rounded-[2rem] hover:border-primary transition-all duration-500 relative overflow-hidden">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block group-hover:rotate-12 transition-transform">ac_unit</span>
+                    <h3 class="text-2xl font-bold mb-4">Smart Cold-Chain</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Specialized transport for pharmaceutical and perishable assets. Real-time IoT temperature monitoring with 0.1°C precision alerts.
+                    </p>
+                    <ul class="space-y-3 text-xs font-medium text-slate-300">
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> 24/7 Thermal Telemetry</li>
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> ISO-Certified Bio-Handling</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3: Autonomous Fulfillment -->
+                <div class="group glass-panel p-10 rounded-[2rem] hover:border-primary transition-all duration-500 relative overflow-hidden">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block group-hover:rotate-12 transition-transform">precision_manufacturing</span>
+                    <h3 class="text-2xl font-bold mb-4">Robotic Warehousing</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Fully automated fulfillment centers. Robots handle sorting and picking with 99.9% accuracy, integrated directly with your e-commerce API.
+                    </p>
+                    <ul class="space-y-3 text-xs font-medium text-slate-300">
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Lights-Out Operations</li>
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Instant Stock-Sync</li>
+                    </ul>
+                </div>
+
+                <!-- Service 4: Customs Intelligence -->
+                <div class="group glass-panel p-10 rounded-[2rem] hover:border-primary transition-all duration-500 relative overflow-hidden">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block group-hover:rotate-12 transition-transform">gavel</span>
+                    <h3 class="text-2xl font-bold mb-4">Customs Quantum</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Automated regulatory compliance. Our platform generates all international documentation and handles duties via secure digital gateways.
+                    </p>
+                    <ul class="space-y-3 text-xs font-medium text-slate-300">
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Automated HTS Classification</li>
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Digital Duty Remittance</li>
+                    </ul>
+                </div>
+
+                <!-- Service 5: Last-Mile Aero -->
+                <div class="group glass-panel p-10 rounded-[2rem] hover:border-primary transition-all duration-500 relative overflow-hidden">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block group-hover:rotate-12 transition-transform">helicopter</span>
+                    <h3 class="text-2xl font-bold mb-4">Aero Delivery</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Drone-assisted and EV fleet last-mile delivery. We bypass urban congestion by utilizing local "Sky-Ports" for micro-fulfillment.
+                    </p>
+                    <ul class="space-y-3 text-xs font-medium text-slate-300">
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> 30-Minute Urban Windows</li>
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Carbon-Neutral Fleet</li>
+                    </ul>
+                </div>
+
+                <!-- Service 6: Strategic Insurance -->
+                <div class="group glass-panel p-10 rounded-[2rem] hover:border-primary transition-all duration-500 relative overflow-hidden">
+                    <span class="material-symbols-outlined text-primary text-5xl mb-6 block group-hover:rotate-12 transition-transform">shield_with_heart</span>
+                    <h3 class="text-2xl font-bold mb-4">Asset Protection</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Full-value insurance backed by smart contracts. Claims are processed instantly when IoT sensors detect cargo compromise.
+                    </p>
+                    <ul class="space-y-3 text-xs font-medium text-slate-300">
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Smart Contract Payouts</li>
+                        <li class="flex items-center gap-2"><span class="size-1.5 bg-primary rounded-full"></span> Global Risk Coverage</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Comparison Section (The "Alive" Part) -->
+        <section class="py-24 bg-surface-dark/30 border-y border-border-dark overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-20">
+                    <div class="flex-1 space-y-8">
+                        <h2 class="text-4xl font-bold">Why the Industry is <span class="text-primary italic">Migrating</span> to Allcargo</h2>
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-6 group">
+                                <div class="size-12 rounded-full border border-primary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-slate-900 transition-all">01</div>
+                                <p class="text-slate-300 font-medium">99.8% Route Accuracy via AI Integration</p>
+                            </div>
+                            <div class="flex items-center gap-6 group">
+                                <div class="size-12 rounded-full border border-primary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-slate-900 transition-all">02</div>
+                                <p class="text-slate-300 font-medium">Reduction in Global Transit Times by 35%</p>
+                            </div>
+                            <div class="flex items-center gap-6 group">
+                                <div class="size-12 rounded-full border border-primary/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-slate-900 transition-all">03</div>
+                                <p class="text-slate-300 font-medium">Immutable Proof-of-Delivery on Blockchain</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1 relative">
+                        <!-- Holographic Image Widget -->
+                        <div class="glass-panel p-4 rounded-[2.5rem] rotate-3 hover:rotate-0 transition-transform duration-700">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzAaCNGd63BDmAwchEaoch0GDivOMUidFRmHimX2yFJ9ALcqzwbWsvSaq5LLjUJ55MRt2DtM8PY9oUZ5omUCXPaxVasS55MrWIjvT8UwcJO-ZLk4peMCavCh5n7rOVJwXdQPx7iQtOroAyxNgl07MFJ142dLhnJRFZY0uzaWZsSerNhoW994lJcN6w_3YY5cK8Ezk4-ITHnsznqJ0etWJ4JIJqlPqG1W7yXKMQLK8YhlbdoK_ZpQI2v7omGMFUjn4LL9EY3XQRUJVa" 
+                                 class="rounded-[2rem] w-full h-full object-cover img-tech-overlay" alt="Modern Logistics Hub">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Service Footer -->
+        <section class="py-32 px-6 text-center">
+            <h2 class="text-4xl lg:text-6xl font-black uppercase mb-8">Ready to <span class="text-primary">Ascend?</span></h2>
+            <p class="text-slate-400 max-w-xl mx-auto mb-12">Connect your business to the most advanced logistics network ever built. Start shipping smarter today.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-primary text-slate-900 font-bold px-12 py-5 rounded-full shadow-neon hover:scale-110 transition-all">Get a Network Quote</button>
+                <button class="border border-border-dark px-12 py-5 rounded-full font-bold hover:bg-white/5 transition-all">Talk to an Operator</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
+
+</body>
+</html>

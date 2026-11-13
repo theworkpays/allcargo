@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Allcargo - Neural Tracking Hub</title>
+
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="assets/css/global.css">
+<script src="assets/js/components.js" defer></script>
+<!-- ADD THIS LINE BELOW IT: -->
+<script src="assets/js/tracking.js" defer></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df2df",
+                        "background-dark": "#102221",
+                        "surface-dark": "#152a28",
+                        "border-dark": "#224946",
+                    },
+                    fontFamily: { "display": ["Space Grotesk", "sans-serif"] },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        .faq-gradient { background: linear-gradient(180deg, rgba(21, 42, 40, 0) 0%, rgba(21, 42, 40, 0.5) 100%); }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+    </style>
+</head>
+
+<body class="bg-background-dark font-display text-white antialiased overflow-x-hidden">
+    <!-- GLOBAL PAGE LOADER -->
+<div id="global-loader">
+    <div class="loader-content">
+        <div class="loader-logo">ALLCARGO</div>
+        <div class="loader-bar-wrapper">
+            <div class="loader-bar"></div>
+        </div>
+        <div class="loader-status">INITIALIZING PROTOCOLS...</div>
+    </div>
+</div>
+    <div id="navbar-placeholder"></div>
+
+    <main class="pt-20 relative">
+        <!-- Ambient Background Glows -->
+        <div class="fixed top-0 left-1/4 size-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <!-- SECTION 1: THE SEARCH HUB -->
+        <section class="relative py-20 px-6 flex flex-col items-center">
+            <div class="max-w-4xl w-full text-center space-y-8">
+                <div class="space-y-4 animate-fade-in">
+                    <h1 class="text-5xl md:text-7xl font-black uppercase tracking-tighter">
+                        Shipment <span class="text-primary neon-text">Tracking</span>
+                    </h1>
+                    <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light">
+                        Initialize a satellite uplink to locate your assets in real-time across the Allcargo intermodal network.
+                    </p>
+                </div>
+
+                <!-- Interactive Search Bar -->
+                <div class="w-full max-w-2xl mx-auto group">
+                    <div class="relative">
+                        <div class="absolute -inset-1 bg-primary/20 rounded-2xl blur opacity-25 group-focus-within:opacity-100 transition duration-500"></div>
+                        <div class="relative flex items-center bg-slate-950/80 backdrop-blur-2xl rounded-2xl p-2 border border-white/10">
+                            <span class="material-symbols-outlined ml-4 text-primary opacity-50">search</span>
+                            <input id="tracking-input" type="text" placeholder="Enter Manifest ID (e.g. AH-8942X)..." 
+                                   class="w-full bg-transparent border-none focus:ring-0 text-lg px-4 py-4 placeholder:text-gray-700">
+                            <button onclick="handleTrackClick()" class="bg-primary text-slate-900 font-bold px-10 py-4 rounded-xl shadow-neon hover:scale-105 transition-all uppercase tracking-widest text-sm">
+                                Track
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE DYNAMIC RESULT (Hidden by default) -->
+        <!-- CONTAINER FOR RESULTS & ERRORS -->
+<section id="tracking-result" class="hidden max-w-6xl mx-auto px-6 pb-32 animate-fade-in">
+
+    <!-- 1. Scanning Loader -->
+    <div id="scanning-loader" class="flex flex-col items-center py-20 space-y-4">
+        <div class="size-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin shadow-[0_0_15px_rgba(13,242,223,0.3)]"></div>
+        <p class="text-primary font-mono text-xs uppercase tracking-[0.3em] animate-pulse">Establishing Satellite Link...</p>
+    </div>
+
+    <!-- 2. Error Card -->
+    <div id="error-card" class="hidden glass-panel border border-red-500/50 p-10 rounded-3xl text-center space-y-4 shadow-[0_0_30px_rgba(239,68,68,0.2)] relative overflow-hidden">
+        <div class="absolute inset-0 bg-red-500/5 animate-pulse"></div>
+        <span class="material-symbols-outlined text-6xl text-red-500 relative z-10">gpp_bad</span>
+        <h2 class="text-3xl font-bold text-white relative z-10">MANIFEST NOT FOUND</h2>
+        <p id="error-text" class="text-red-300 font-mono relative z-10">ERROR: The tracking ID entered does not exist in the neural ledger.</p>
+        <div class="pt-4 relative z-10">
+            <a href="contact.html" class="text-xs text-slate-400 hover:text-white underline decoration-dashed underline-offset-4">Report Missing Cargo</a>
+        </div>
+    </div>
+
+    <!-- 3. Result Card (The HUD) -->
+    <!-- 3. Result Card (The HUD) -->
+<div id="result-card" class="hidden hud-panel rounded-3xl overflow-hidden shadow-2xl border-primary/20 bg-slate-900/90 backdrop-blur-xl relative w-full max-w-6xl mx-auto animate-fade-in">
+    <!-- Background Grid inside card -->
+    <div class="absolute inset-0 grid-bg opacity-10 pointer-events-none"></div>
+
+    <!-- Header -->
+    <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center p-6 md:p-8 border-b border-white/5 bg-white/5">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span class="size-2 bg-primary rounded-full animate-pulse"></span>
+                <p class="text-[10px] font-mono text-primary uppercase tracking-[0.2em]">Secure Manifest Uplink</p>
+            </div>
+            <h2 id="display-id" class="text-3xl md:text-5xl font-black text-white tracking-tight flex items-center gap-3 font-mono">
+                <!-- JS WILL PUT ID HERE -->
+            </h2>
+            <p id="display-cargo" class="text-xs text-slate-400 mt-1 uppercase tracking-widest font-bold">--</p>
+        </div>
+        <div class="mt-4 md:mt-0 flex gap-4">
+            <div class="text-right bg-black/40 p-3 rounded-xl border border-white/5 backdrop-blur-md">
+                <p class="text-[9px] text-slate-400 uppercase font-bold tracking-widest mb-1">Status Protocol</p>
+                <p id="display-status" class="text-lg font-bold text-primary font-mono uppercase">--</p>
+            </div>
+            <div class="text-right bg-black/40 p-3 rounded-xl border border-white/5 backdrop-blur-md">
+                <p class="text-[9px] text-slate-400 uppercase font-bold tracking-widest mb-1">Estimated Arrival</p>
+                <p id="display-eta" class="text-lg font-bold text-white font-mono text-shadow-sm">--</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+        
+        <!-- Left: Timeline Journey -->
+        <div class="lg:col-span-4 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-white/5 bg-slate-900/50 relative">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">history</span> Live Transit Log
+            </h3>
+            <div id="history-container" class="relative space-y-8 pl-4">
+                <!-- JS WILL INJECT HISTORY HERE -->
+            </div>
+        </div>
+
+        <!-- Right: Map & Specs -->
+        <div class="lg:col-span-8 p-6 md:p-8 flex flex-col gap-6">
+            
+            <!-- Dynamic Map Widget -->
+            <div class="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden border border-primary/30 bg-slate-950 group shadow-lg">
+                <!-- Map Image (World Map Dark) -->
+                <div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale" 
+                     style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD0dklT-TXPkaPILXcYCyskwwOqY6M8ZCxMUqLT8uV7Hi9UF7B4STbAJZEoWvCrbo3WgAsn3gsOrGxtjHSKrYAG1HcZzmNcVNFgM5ZclXmpqxCOJl-jGwbOfwBAddvpnVIn1I0zpo_gMJJIlYKAEdpXHiAhQCU6ezKUbYYHx6vkTWd2Q0k8hxFnhJQJYQMXh2U-mmqNo8e3mLkb5-OjUR98iof_vykklmVB8mLmIURQJ49zo0UzSZgaFkXkLEhAZGRzj-8B0LoW3ZKT');">
+                </div>
+                
+                <div class="absolute inset-0 grid-bg opacity-30"></div>
+                <div class="radar-scan opacity-30"></div>
+                
+                <!-- VISUAL TRAJECTORY (SVG) -->
+                <div class="absolute inset-0 z-10 pointer-events-none">
+                    <svg class="w-full h-full" preserveAspectRatio="none">
+                        <line x1="10%" y1="50%" x2="90%" y2="50%" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="5,5" />
+                        <line id="map-progress-line" x1="10%" y1="50%" x2="10%" y2="50%" stroke="#0df2df" stroke-width="2" class="drop-shadow-[0_0_10px_#0df2df] transition-all duration-[2000ms]" />
+                    </svg>
+                </div>
+
+                <!-- MOVING TARGET DOT -->
+                <div id="map-target" class="absolute top-1/2 -translate-y-1/2 z-20 transition-all duration-[2000ms]" style="left: 10%">
+                    <div class="relative">
+                        <div class="size-20 border border-primary/30 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-ping opacity-20"></div>
+                        <div class="size-6 bg-primary rounded-full shadow-[0_0_30px_#0df2df] animate-pulse relative z-10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[10px] text-black font-bold rotate-90">flight</span>
+                        </div>
+                        <div class="absolute top-8 left-1/2 -translate-x-1/2 bg-black/80 px-2 py-1 rounded border border-primary/30 whitespace-nowrap backdrop-blur-md">
+                            <p id="map-dynamic-label" class="text-[8px] text-primary font-bold uppercase tracking-widest">ORIGIN</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Map Overlay Data -->
+                <div class="absolute top-4 left-4 glass-panel px-4 py-2 rounded-lg border-l-2 border-primary backdrop-blur-md z-30">
+                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-1">Signal Locked</p>
+                    <p id="map-overlay-location" class="text-sm text-white font-black uppercase tracking-wide">LOCATING...</p>
+                </div>
+            </div>
+
+            <!-- Data Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-surface-dark/40 border border-white/5 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Origin</p>
+                    <p id="display-origin" class="text-sm font-bold text-white truncate">--</p>
+                </div>
+                <div class="bg-surface-dark/40 border border-white/5 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Destination</p>
+                    <p id="display-dest" class="text-sm font-bold text-white truncate">--</p>
+                </div>
+                <div class="bg-surface-dark/40 border border-white/5 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Weight</p>
+                    <p id="display-weight" class="text-sm font-bold text-white">--</p>
+                </div>
+                <div class="bg-surface-dark/40 border border-white/5 p-4 rounded-xl hover:bg-white/5 transition-colors group">
+                    <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Receiver</p>
+                    <p id="display-receiver" class="text-sm font-bold text-white truncate">--</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Decorative Bottom Bar -->
+    <div class="h-1 w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+</div>
+</section>
+
+        <!-- SECTION 3: TRACKING FEATURES -->
+        <section class="py-24 bg-surface-dark/30 border-y border-white/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 space-y-4">
+                    <h2 class="text-primary font-bold uppercase tracking-[0.3em] text-xs">Proprietary Technology</h2>
+                    <h3 class="text-4xl lg:text-6xl font-black uppercase">Beyond Simple Tracking</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="space-y-6 group">
+                        <div class="aspect-square rounded-3xl overflow-hidden glass-panel p-2">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2bqwTEeABPLNpRRASdp4B9XU3na8Zdd29kuptGR4gITaJ34Ll3UlMEJX0J6asgOvPvalL1vywQyORxCMQBhK3GWTN8FdhB9-Jfjh3Rw_rFZLK0rj_JF0OpwcQ5MgdRHksyDxDt1L5gyf7zUEIpR69rQtVZCp2wAmWt7SUOFKBNjhPIgBWVYgYiE6uxAAf0DPP36BjkPgHw0ogHZDC4JklW0bQyI9cELxGtKRFHDHSV-PI5Y3dog5FAVLondaZkiS_Ck98Cz333G7J" 
+                                 class="w-full h-full object-cover rounded-2xl img-tech-overlay group-hover:scale-110 transition-transform duration-700" alt="Satellite">
+                        </div>
+                        <h4 class="text-2xl font-bold text-primary italic">Deep-Space Link</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Unlike cellular GPS, our neural network uses low-orbit satellite constellations to track cargo in remote oceans and desert corridors.</p>
+                    </div>
+
+                    <div class="space-y-6 group">
+                        <div class="aspect-square rounded-3xl overflow-hidden glass-panel p-2">
+                            <div class="w-full h-full bg-slate-900 rounded-2xl flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary text-8xl opacity-20 group-hover:scale-125 transition-transform">security</span>
+                            </div>
+                        </div>
+                        <h4 class="text-2xl font-bold text-primary italic">Chain of Custody</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Every scan is a blockchain transaction. Your package's history is immutable, encrypted, and accessible only with your private ID.</p>
+                    </div>
+
+                    <div class="space-y-6 group">
+                        <div class="aspect-square rounded-3xl overflow-hidden glass-panel p-2">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzAaCNGd63BDmAwchEaoch0GDivOMUidFRmHimX2yFJ9ALcqzwbWsvSaq5LLjUJ55MRt2DtM8PY9oUZ5omUCXPaxVasS55MrWIjvT8UwcJO-ZLk4peMCavCh5n7rOVJwXdQPx7iQtOroAyxNgl07MFJ142dLhnJRFZY0uzaWZsSerNhoW994lJcN6w_3YY5cK8Ezk4-ITHnsznqJ0etWJ4JIJqlPqG1W7yXKMQLK8YhlbdoK_ZpQI2v7omGMFUjn4LL9EY3XQRUJVa" 
+                                 class="w-full h-full object-cover rounded-2xl img-tech-overlay group-hover:scale-110 transition-transform duration-700" alt="AI Core">
+                        </div>
+                        <h4 class="text-2xl font-bold text-primary italic">AI ETA Precision</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Our core engine analyzes weather patterns and port congestion to provide an arrival estimate accurate to within 15 minutes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: FAQ (REALISTIC) -->
+        <section class="py-24 max-w-4xl mx-auto px-6">
+            <h3 class="text-3xl font-bold mb-12 text-center uppercase tracking-widest">Protocol Intelligence (FAQ)</h3>
+            <div class="space-y-4">
+                <details class="group glass-panel p-6 rounded-2xl border-white/5 hover:border-primary/30 transition-all cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-100">
+                        What is a Manifest ID?
+                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                    </summary>
+                    <p class="mt-4 text-slate-400 text-sm leading-relaxed">Your Manifest ID is a unique 12-digit alphanumeric code generated at the moment of booking. It serves as your neural key to access real-time telemetry data.</p>
+                </details>
+
+                <details class="group glass-panel p-6 rounded-2xl border-white/5 hover:border-primary/30 transition-all cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-100">
+                        Can I reroute a shipment in transit?
+                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                    </summary>
+                    <p class="mt-4 text-slate-400 text-sm leading-relaxed">Yes. However, rerouting requires a Level 2 authorization. Please visit the Command Center Hub to submit a vector-change request.</p>
+                </details>
+
+                <details class="group glass-panel p-6 rounded-2xl border-white/5 hover:border-primary/30 transition-all cursor-pointer">
+                    <summary class="flex justify-between items-center font-bold text-slate-100">
+                        How accurate is the "Live View" location?
+                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                    </summary>
+                    <p class="mt-4 text-slate-400 text-sm leading-relaxed">Our GPS telemetry is accurate within 3 meters. Note that orbital updates occur every 60 seconds for Aero-Priority shipments.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- SECTION 5: ASSISTANCE CTA -->
+        <section class="py-24 px-6 relative flex flex-col items-center text-center">
+            <div class="absolute inset-0 bg-primary/5 blur-[150px] -z-10"></div>
+            <div class="max-w-2xl space-y-8">
+                <h3 class="text-4xl font-black uppercase tracking-tight">Need Mission Assistance?</h3>
+                <p class="text-slate-400">Our logistics operators are available 24/7 to help you troubleshoot routing anomalies or verify chain of custody.</p>
+                <a href="contact.html" class="inline-flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-4 rounded-2xl font-bold transition-all group">
+                    Contact Mission Control
+                    <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">support_agent</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        function handleTrackClick() {
+            const input = document.getElementById('tracking-input');
+            const resultSection = document.getElementById('tracking-result');
+            const loader = document.getElementById('scanning-loader');
+            const card = document.getElementById('result-card');
+
+            if (input.value.length < 3) {
+                alert("Please enter a valid Manifest ID.");
+                return;
+            }
+
+            // 1. Show the section and the loader
+            resultSection.classList.remove('hidden');
+            card.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            // 2. Scroll to result
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // 3. Simulate "Scanning" for 2 seconds
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                card.classList.remove('hidden');
+                // Trigger any entry animations if needed
+                card.classList.add('animate-fade-in');
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>

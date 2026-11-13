@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>About Allcargo - Our Mission & Team</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Global Custom CSS -->
+    <link rel="stylesheet" href="assets/css/global.css">
+
+    <!-- Component Loader -->
+    <script src="assets/js/components.js" defer></script>
+
+    <!-- Unified Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df2df",
+                        "background-dark": "#102221",
+                        "surface-dark": "#183432",
+                        "border-dark": "#224946",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-dark font-display text-white antialiased overflow-x-hidden">
+    <!-- GLOBAL PAGE LOADER -->
+<div id="global-loader">
+    <div class="loader-content">
+        <div class="loader-logo">ALLCARGO</div>
+        <div class="loader-bar-wrapper">
+            <div class="loader-bar"></div>
+        </div>
+        <div class="loader-status">INITIALIZING PROTOCOLS...</div>
+    </div>
+</div>
+    <!-- Shared Navigation -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Main Content Wrapped in pt-20 to fix Navbar overlapping -->
+    <main class="pt-20">
+        
+        <!-- Hero Section -->
+        <section class="w-full flex justify-center py-12 md:py-20 px-4">
+            <div class="max-w-5xl w-full relative overflow-hidden rounded-xl bg-surface-dark border border-border-dark p-8 md:p-16">
+                <!-- Abstract BG class from global.css -->
+                <div class="absolute inset-0 z-0 opacity-20 abstract-dots"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                    <div class="flex-1 text-center md:text-left">
+                        <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6">
+                            Revolutionizing Logistics at <span class="text-primary neon-text">Mach Speed</span>
+                        </h1>
+                        <p class="text-gray-300 text-lg leading-relaxed max-w-xl mb-8">
+                            We are building the future of shipping with transparency, AI-driven precision, and a human-centric approach to global trade.
+                        </p>
+                        <div class="flex gap-4 justify-center md:justify-start">
+                            <button class="bg-primary text-slate-900 font-bold py-3 px-8 rounded-lg hover:bg-[#0be0ce] transition-all shadow-neon">
+                                Our Journey
+                            </button>
+                            <button class="border border-primary text-primary font-bold py-3 px-8 rounded-lg hover:bg-primary/10 transition-all">
+                                Contact Team
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Hero Image Widget -->
+                    <div class="w-full md:w-1/2 aspect-square max-h-[400px] rounded-lg overflow-hidden relative shadow-2xl">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5LLcG9QNuZNfeJFBEKZd3tsMwalt-a9aexRGI_5B7ttCYGVRi2WAy7iLCHS2LByzzT3pKnbgUOf19btcfcYRXLLyKWgd3IPbg7qKCtfrzxHBHYxU2oSgTL68qQhNr1WmvNUrQBacp-R_dc1ElK_aQzZ8AV0_dMzey3tpE4Eyt_F3rUABD2CQSDmJnV1M5JaA-xJyvLPkqQSPJqNX9rXY9eMxsagi7DiFY6IyyIBNgR4S9-b1MjT4Zor9ZiWrQe6L8yua6ZeHXW3PU" 
+                             class="w-full h-full object-cover img-tech-overlay" alt="Futuristic Warehouse">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission & Values -->
+        <section class="max-w-5xl mx-auto px-4 pb-20">
+            <div class="mb-12">
+                <div class="flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-sm mb-2">
+                    <span class="material-symbols-outlined">verified</span> Our Mission
+                </div>
+                <h2 class="text-3xl font-bold">Core Values Driving Us</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Values use glass-panel from global.css -->
+                <div class="glass-panel p-8 rounded-xl group transition-all">
+                    <span class="material-symbols-outlined text-primary text-4xl mb-4 group-hover:scale-110 transition-transform">visibility</span>
+                    <h3 class="text-xl font-bold mb-2">Transparency</h3>
+                    <p class="text-gray-400 text-sm">Real-time visibility into every shipment, eliminating the black box of traditional logistics.</p>
+                </div>
+                <div class="glass-panel p-8 rounded-xl group transition-all">
+                    <span class="material-symbols-outlined text-primary text-4xl mb-4 group-hover:scale-110 transition-transform">bolt</span>
+                    <h3 class="text-xl font-bold mb-2">Speed</h3>
+                    <p class="text-gray-400 text-sm">Optimized routing algorithms ensuring mach-speed delivery for critical cargo.</p>
+                </div>
+                <div class="glass-panel p-8 rounded-xl group transition-all">
+                    <span class="material-symbols-outlined text-primary text-4xl mb-4 group-hover:scale-110 transition-transform">memory</span>
+                    <h3 class="text-xl font-bold mb-2">Efficiency</h3>
+                    <p class="text-gray-400 text-sm">AI-driven predictive logistics reducing waste and optimizing load capacity.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DETAILED ANIMATED TIMELINE -->
+        <section class="max-w-6xl mx-auto px-4 py-24">
+            <div class="text-center mb-20">
+                <span class="text-primary font-bold uppercase tracking-[0.3em] text-xs">Chronicles</span>
+                <h2 class="text-4xl font-bold mt-2">Company Milestones</h2>
+            </div>
+
+            <div class="relative">
+                <!-- Glowing Central Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary via-border-dark to-transparent md:-translate-x-1/2 shadow-[0_0_15px_rgba(13,242,223,0.2)]"></div>
+
+                <!-- Milestone 1: Left -->
+                <div class="relative mb-24 group">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-1/2 md:pr-16 text-left md:text-right">
+                            <div class="glass-panel p-8 rounded-2xl border-l-4 md:border-l-0 md:border-r-4 border-primary transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-neon cursor-default">
+                                <span class="text-primary text-3xl font-black italic opacity-50">2021</span>
+                                <h3 class="text-xl font-bold text-white mb-2">The Genesis Algorithm</h3>
+                                <p class="text-gray-400 leading-relaxed">Allcargo was founded in a small lab in Tokyo. Our engineers perfected the first predictive routing engine, reducing transit fuel waste by 22%.</p>
+                            </div>
+                        </div>
+                        <!-- Pulsing Node -->
+                        <div class="absolute left-4 md:left-1/2 w-6 h-6 rounded-full bg-background-dark border-4 border-primary md:-translate-x-1/2 z-10 transition-transform duration-500 group-hover:scale-150">
+                            <div class="w-full h-full rounded-full bg-primary animate-pulse opacity-50"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Milestone 2: Right -->
+                <div class="relative mb-24 group">
+                    <div class="flex flex-col md:flex-row items-center justify-end">
+                        <div class="absolute left-4 md:left-1/2 w-6 h-6 rounded-full bg-background-dark border-4 border-primary md:-translate-x-1/2 z-10 transition-transform duration-500 group-hover:scale-150">
+                            <div class="w-full h-full rounded-full bg-primary animate-pulse opacity-50"></div>
+                        </div>
+                        <div class="w-full md:w-1/2 md:pl-16">
+                            <div class="glass-panel p-8 rounded-2xl border-l-4 border-primary transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-neon cursor-default">
+                                <span class="text-primary text-3xl font-black italic opacity-50">2022</span>
+                                <h3 class="text-xl font-bold text-white mb-2">Orbital Link Established</h3>
+                                <p class="text-gray-400 leading-relaxed">Successfully integrated real-time satellite telemetry into our dashboard, allowing for 100% visibility over oceanic "dead zones."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Milestone 3: Left -->
+                <div class="relative mb-24 group">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-1/2 md:pr-16 text-left md:text-right">
+                            <div class="glass-panel p-8 rounded-2xl border-l-4 md:border-l-0 md:border-r-4 border-primary transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-neon cursor-default">
+                                <span class="text-primary text-3xl font-black italic opacity-50">2024</span>
+                                <h3 class="text-xl font-bold text-white mb-2">The Global Network</h3>
+                                <p class="text-gray-400 leading-relaxed">Now powering logistics for over 500 enterprise partners across 6 continents, delivering at Mach Speed with carbon-neutral protocols.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 w-8 h-8 rounded-full bg-primary border-4 border-white md:-translate-x-1/2 z-10 shadow-[0_0_20px_#fff] animate-bounce"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DETAILED ANIMATED TEAM SECTION -->
+        <section class="bg-slate-deep/50 py-24 border-t border-border-dark">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                    <div>
+                        <span class="text-primary font-bold uppercase tracking-[0.3em] text-xs">The Crew</span>
+                        <h2 class="text-4xl font-bold mt-2">Visionaries & Engineers</h2>
+                    </div>
+                    <p class="text-gray-400 max-w-sm">A diverse collective of minds working to redefine how the world moves goods.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                    
+                    <!-- Member 1: Hover Image Scale + Color Reveal -->
+                    <div class="group relative bg-surface-dark rounded-3xl overflow-hidden border border-border-dark transition-all duration-500 hover:border-primary">
+                        <!-- Image Container -->
+                        <div class="aspect-[4/5] overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuiPGqlehKn2mhMSKM63kM662b5Fg8NQPZMXB6J7yIEbaqY7v6hkzP6FLIb9A7DIfAeXzo_qRZZLgsQDy3fiedYzHNKurciSypusEgCB8TIUXaQwa8YZcMqvYOy3gJHhJSORZaMGQibhhd-LMSHLdkJdH9ZFPJmJSq8lwiGzozWnhucpCVBEvvIQAcuzNeMrXWZxLxYhe5tamuTh5g5D1WvwOMvtNt0SamRcpKmM0gLMklBL06DBBsknKj-muIM6t4NuhNxtBGGdX7" 
+                                 class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" alt="Sarah Chen">
+                            
+                            <!-- Cyber Data Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-60"></div>
+                            <div class="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                <div class="bg-primary/20 backdrop-blur-md border border-primary/40 p-2 rounded-lg">
+                                    <span class="material-symbols-outlined text-primary text-sm">terminal</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content Overlay -->
+                        <div class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-2xl font-bold text-white">Sarah Chen</h3>
+                            <p class="text-primary font-medium mb-4">Chief Executive Officer</p>
+                            
+                            <!-- Animated Social Icons -->
+                            <div class="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity delay-200">
+                                <a href="#" class="text-gray-400 hover:text-white transition-colors"><span class="material-symbols-outlined">share</span></a>
+                                <a href="#" class="text-gray-400 hover:text-white transition-colors"><span class="material-symbols-outlined">mail</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Member 2 -->
+                    <div class="group relative bg-surface-dark rounded-3xl overflow-hidden border border-border-dark transition-all duration-500 hover:border-primary">
+                        <div class="aspect-[4/5] overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzFaqiZiFW3hbLyMl7YdAUZUCeJpsdW7Hg7xPitwyETqiiAK-wN2DFFngwfUVDDTnF8vMy1hHTKOo8tXdvpoygIHNt2F35GckxKFD3TvpPzhHgJUwAs2ARGgV2iIXVD1s2wcNgXNLWbuY9J8Yzuv-bozebXqHAlU36Dk_zVgdULhKWEmX8UrPL9w_Xn1BNs0u97HOzn0sEDE6LzK5apSzPl5rFkQUHSIrwXxnCeKDtAC9pUgME3doIhYJbJ_e4sBl2rbsRxLL9G_wD" 
+                                 class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" alt="David Okonjo">
+                            <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-60"></div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-2xl font-bold text-white">David Okonjo</h3>
+                            <p class="text-primary font-medium mb-4">Head of Tracking AI</p>
+                            <div class="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity delay-200">
+                                <a href="#" class="text-gray-400 hover:text-white transition-colors"><span class="material-symbols-outlined">share</span></a>
+                                <a href="#" class="text-gray-400 hover:text-white transition-colors"><span class="material-symbols-outlined">mail</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Member 3 -->
+                    <div class="group relative bg-surface-dark rounded-3xl overflow-hidden border border-border-dark transition-all duration-500 hover:border-primary">
+                        <div class="aspect-[4/5] overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD859k7ZQiVa83yNWnyUcrOuCI_q-gKyt1nQ_kjH9l9m227WqRTjoa5K42o0zcrggEHWjV0Y2md_aLHOfcVrv6r-seSF4_Ixl7LX_MzWlZBGzwW4du8wz6cBwpAYrjQ1S7r6qZT9tQENrjxs0FB9y19FNsQf56TkBcSsrhM2tBDXMhVv5Spcc2CT9PUy8YqOLI92tqOfe5QmthqYbEDDSryPmFaRH2idQyTVqqax3TaJODFRP0dwsdiIgU2cQh-pgKbQuN-XrMk9D2w" 
+                                 class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" alt="Elena Rodriguez">
+                            <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-60"></div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-2xl font-bold text-white">Elena Rodriguez</h3>
+                            <p class="text-primary font-medium mb-4">Logistics Lead</p>
+                            <div class="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity delay-200">
+                                <a href="#" class="text-gray-400 hover:text-white transition-colors"><span class="material-symbols-outlined">share</span></a>
+                                <a href="#" class="text-gray-400 hover:text-white transition-colors"><span class="material-symbols-outlined">mail</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+</body>
+</html>

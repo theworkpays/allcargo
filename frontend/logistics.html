@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Global Logistics Network | Allcargo Infrastructure</title>
+
+    <!-- Google Fonts & Material Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Global Custom CSS -->
+    <link rel="stylesheet" href="assets/css/global.css">
+
+    <!-- Component Loader -->
+    <script src="assets/js/components.js" defer></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df2df",
+                        "background-dark": "#102221",
+                        "surface-dark": "#162e2c",
+                        "border-dark": "#316863",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-dark font-display text-white antialiased overflow-x-hidden">
+    <!-- GLOBAL PAGE LOADER -->
+<div id="global-loader">
+    <div class="loader-content">
+        <div class="loader-logo">ALLCARGO</div>
+        <div class="loader-bar-wrapper">
+            <div class="loader-bar"></div>
+        </div>
+        <div class="loader-status">INITIALIZING PROTOCOLS...</div>
+    </div>
+</div>
+    <!-- Subtle Grid Background -->
+    <div class="fixed inset-0 z-0 opacity-10 bg-grid-pattern grid-bg pointer-events-none"></div>
+
+    <!-- Shared Navigation -->
+    <div id="navbar-placeholder"></div>
+
+    <main class="pt-20 relative z-10">
+        
+        <!-- Hero Section: Strategic Vision -->
+        <section class="px-6 py-16 lg:py-24 max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="flex-1 space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        Operational Status: Global Network Active
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-black leading-tight tracking-tight uppercase">
+                        The Future of <br/><span class="text-primary neon-text">Supply-Chain</span> Intelligence
+                    </h1>
+                    <p class="text-slate-400 text-lg md:text-xl font-normal max-w-2xl leading-relaxed">
+                        Allcargo synchronizes global trade through 240+ intermodal hubs. We utilize AI-optimized routing to bridge the gap between continents, ensuring your assets move with surgical precision.
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <button class="bg-primary text-slate-900 font-bold px-8 py-4 rounded-lg shadow-neon hover:bg-[#0be0ce] transition-all">
+                            Strategic Infrastructure
+                        </button>
+                        <button class="border border-border-dark hover:border-primary px-8 py-4 rounded-lg font-bold transition-all">
+                            Partner Network
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Animated Network Visual -->
+                <div class="flex-1 w-full relative">
+                    <div class="glass-panel aspect-square rounded-3xl overflow-hidden relative group">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-1000" 
+                             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD0dklT-TXPkaPILXcYCyskwwOqY6M8ZCxMUqLT8uV7Hi9UF7B4STbAJZEoWvCrbo3WgAsn3gsOrGxtjHSKrYAG1HcZzmNcVNFgM5ZclXmpqxCOJl-jGwbOfwBAddvpnVIn1I0zpo_gMJJIlYKAEdpXHiAhQCU6ezKUbYYHx6vkTWd2Q0k8hxFnhJQJYQMXh2U-mmqNo8e3mLkb5-OjUR98iof_vykklmVB8mLmIURQJ49zo0UzSZgaFkXkLEhAZGRzj-8B0LoW3ZKT");'>
+                        </div>
+                        <!-- Floating HUD Elements -->
+                        <div class="absolute top-8 left-8 p-4 bg-black/60 backdrop-blur-md rounded-xl border border-white/10">
+                            <p class="text-[10px] text-primary font-mono">ACTIVE_NODES</p>
+                            <p class="text-2xl font-bold">140+</p>
+                        </div>
+                        <div class="absolute bottom-8 right-8 p-4 bg-black/60 backdrop-blur-md rounded-xl border border-white/10 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary animate-spin">sync</span>
+                            <p class="text-[10px] font-mono">REAL-TIME_SYNC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Infrastructure Pillars -->
+        <section class="bg-surface-dark/30 border-y border-border-dark py-20 px-6">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="space-y-4">
+                    <span class="material-symbols-outlined text-primary text-4xl">hub</span>
+                    <h3 class="text-xl font-bold uppercase">Intermodal Hubs</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Strategic clusters located at key global trade intersections. Our hubs provide seamless transitions between air, sea, and land transport.</p>
+                </div>
+                <div class="space-y-4">
+                    <span class="material-symbols-outlined text-primary text-4xl">precision_manufacturing</span>
+                    <h3 class="text-xl font-bold uppercase">Autonomous Warehousing</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Fulfillment centers powered by robotic sorting and AI inventory management, reducing human error and processing time by 40%.</p>
+                </div>
+                <div class="space-y-4">
+                    <span class="material-symbols-outlined text-primary text-4xl">security</span>
+                    <h3 class="text-xl font-bold uppercase">Blockchain Custody</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Every handover in the Aero-Network is logged on an immutable ledger, ensuring total accountability and asset security.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Shipping Tiers -->
+        <section class="max-w-7xl mx-auto px-6 py-24">
+            <div class="text-center mb-16 space-y-4">
+                <h2 class="text-4xl font-bold">Service Architecture</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Scalable logistics solutions tailored for high-frequency enterprise demands.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Tier 1 -->
+                <div class="glass-panel p-10 rounded-3xl flex flex-col gap-8 group hover:border-primary transition-all duration-500">
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-primary text-3xl">flight</span>
+                        <h4 class="text-xl font-bold">Priority Aero</h4>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">High-velocity air transit for time-sensitive cargo. Delivery window: 24-48 hours globally.</p>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Next-Flight-Out Service</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Real-time Sensor Telemetry</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl border border-border-dark group-hover:bg-primary group-hover:text-slate-900 font-bold transition-all mt-auto">Inquire Priority</button>
+                </div>
+
+                <!-- Tier 2 (Highlighted) -->
+                <div class="glass-panel p-10 rounded-3xl flex flex-col gap-8 border-primary shadow-neon transform lg:-translate-y-4 bg-surface-dark/50">
+                    <div class="absolute top-0 right-10 -translate-y-1/2 bg-primary text-slate-900 text-[10px] font-bold px-4 py-1 rounded-full">MOST EFFICIENT</div>
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-primary text-3xl">rocket_launch</span>
+                        <h4 class="text-xl font-bold">Standard Network</h4>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">Optimized intermodal shipping utilizing the full Aero-Network backbone. Balanced speed and cost.</p>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> AI-Route Optimization</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> End-to-End Customs Filing</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl bg-primary text-slate-900 font-bold shadow-neon transition-all mt-auto">Book Network</button>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="glass-panel p-10 rounded-3xl flex flex-col gap-8 group hover:border-primary transition-all duration-500">
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-primary text-3xl">warehouse</span>
+                        <h4 class="text-xl font-bold">Enterprise Hub</h4>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">Complete warehousing and fulfillment solutions for high-volume inventory management.</p>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Distributed Inventory</li>
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> API Integration Hub</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl border border-border-dark group-hover:bg-primary group-hover:text-slate-900 font-bold transition-all mt-auto">Inquire Hub</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA: Scale with us -->
+        <section class="max-w-5xl mx-auto px-6 py-24 text-center">
+            <h2 class="text-3xl font-bold mb-6">Scale your Logistics with Mach-Speed Precision</h2>
+            <p class="text-slate-400 mb-10 max-w-xl mx-auto">Join 500+ enterprises optimizing their global footprint through the Allcargo Network.</p>
+            <button class="bg-primary text-slate-900 font-bold px-10 py-4 rounded-xl shadow-neon hover:scale-105 transition-all">
+                Get a Custom Quote
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Shared Footer -->
+    <div id="footer-placeholder"></div>
+
+</body>
+</html>

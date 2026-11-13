@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Allcargo - Command Access</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link rel="stylesheet" href="assets/css/global.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: { colors: { primary: "#0df2df", background: "#102221" }, fontFamily: { display: ["Space Grotesk", "sans-serif"] } },
+            },
+        }
+    </script>
+    <style>
+        /* Shake Animation for Wrong Password */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .shake-input { animation: shake 0.3s ease-in-out; border-color: #ef4444 !important; color: #ef4444 !important; }
+    </style>
+</head>
+<body class="bg-background font-display text-white overflow-hidden flex items-center justify-center h-screen relative">
+
+    <!-- Background Elements -->
+    <div class="absolute inset-0 grid-bg opacity-30"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <!-- Login Card -->
+    <div class="glass-panel p-10 rounded-3xl w-full max-w-md relative z-10 text-center space-y-8 shadow-2xl border border-primary/20 backdrop-blur-xl">
+        <div class="size-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto border border-primary/50 shadow-neon group hover:scale-110 transition-transform duration-500">
+            <span class="material-symbols-outlined text-5xl text-primary group-hover:rotate-12 transition-transform">encrypted</span>
+        </div>
+        
+        <div>
+            <h1 class="text-3xl font-black uppercase tracking-widest text-white">Restricted Access</h1>
+            <p class="text-slate-400 text-xs mt-2 font-mono uppercase tracking-[0.2em]">Authorized Personnel Only</p>
+        </div>
+
+        <form id="login-form" class="space-y-6">
+            <div class="relative group">
+                <input type="password" id="access-key" placeholder="ACCESS KEY" 
+                       class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-4 text-center tracking-[0.5em] text-xl focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:tracking-normal placeholder:text-sm text-white focus:shadow-[0_0_20px_rgba(13,242,223,0.2)]">
+            </div>
+            <button type="submit" id="submit-btn" class="w-full bg-primary text-slate-900 font-bold py-4 rounded-xl shadow-neon hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest flex items-center justify-center gap-2">
+                <span>Initialize Uplink</span>
+                <span class="material-symbols-outlined text-sm">login</span>
+            </button>
+        </form>
+        
+        <!-- Status Message -->
+        <p id="error-msg" class="text-red-400 text-xs font-mono hidden font-bold uppercase tracking-wide"></p>
+    </div>
+
+    <script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const keyInput = document.getElementById('access-key');
+        const errorMsg = document.getElementById('error-msg');
+        const btn = document.getElementById('submit-btn');
+        const originalText = btn.innerHTML;
+
+        // UI Loading
+        btn.innerHTML = "VERIFYING...";
+        btn.classList.add('opacity-50');
+        errorMsg.classList.add('hidden');
+
+        try {
+            const response = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key: keyInput.value })
+            });
+
+            // Check if server replied with JSON
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                throw new Error("Server Error: Received HTML instead of JSON.");
+            }
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                // Success
+                localStorage.setItem('admin_token', data.token);
+                btn.innerHTML = "ACCESS GRANTED";
+                btn.classList.replace('bg-primary', 'bg-green-500');
+                setTimeout(() => window.location.href = 'admin.html', 800);
+            } else {
+                // Wrong Password
+                throw new Error(data.message || "Access Denied");
+            }
+
+        } catch (error) {
+            console.error(error);
+            errorMsg.innerText = error.message;
+            errorMsg.classList.remove('hidden');
+            
+            // Reset Button
+            btn.innerHTML = originalText;
+            btn.classList.remove('opacity-50');
+            
+            // Shake Effect
+            keyInput.classList.add('shake-input');
+            setTimeout(() => keyInput.classList.remove('shake-input'), 500);
+        }
+    });
+</script>
+</body>
+</html>

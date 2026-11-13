@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Allcargo - Contact & Support Hub</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Global Custom CSS -->
+    <link rel="stylesheet" href="assets/css/global.css">
+
+    <!-- Component Loader -->
+    <script src="assets/js/components.js" defer></script>
+
+    <!-- Unified Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df2df",
+                        "background-dark": "#102221",
+                        "surface-dark": "#183432",
+                        "border-dark": "#224946",
+                        "input-border": "#316863",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-dark font-display text-white antialiased overflow-x-hidden">
+    <!-- GLOBAL PAGE LOADER -->
+<div id="global-loader">
+    <div class="loader-content">
+        <div class="loader-logo">ALLCARGO</div>
+        <div class="loader-bar-wrapper">
+            <div class="loader-bar"></div>
+        </div>
+        <div class="loader-status">INITIALIZING PROTOCOLS...</div>
+    </div>
+</div>
+    <!-- Shared Navbar Injection -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- MAIN WRAPPER: pt-20 matches navbar height exactly -->
+    <main class="pt-20">
+        
+        <!-- Hero / Contact Form Section -->
+        <section class="relative pt-8 pb-20 px-6 lg:px-10 overflow-hidden">
+            <!-- Background decorative elements -->
+            <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+                
+                <!-- Left Column: Command Form -->
+                <div class="lg:col-span-7 flex flex-col gap-6">
+                    <div class="space-y-2">
+                        <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white uppercase">
+                            Command Center <span class="text-primary neon-text">Support</span>
+                        </h1>
+                        <p class="text-slate-400 text-lg max-w-xl">Initiate a secure transmission. How can we assist your fleet operations today?</p>
+                    </div>
+
+                    <form class="glass-panel p-8 rounded-2xl space-y-6 shadow-2xl">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <label class="flex flex-col gap-2">
+                                <span class="text-slate-300 text-sm font-medium">Agent Name</span>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 material-symbols-outlined text-[20px]">person</span>
+                                    <input class="w-full bg-surface-dark/50 border border-input-border text-white rounded-lg h-12 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-500 transition-all outline-none" placeholder="Commander Shepard" type="text"/>
+                                </div>
+                            </label>
+                            <label class="flex flex-col gap-2">
+                                <span class="text-slate-300 text-sm font-medium">Comms Channel (Email)</span>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 material-symbols-outlined text-[20px]">mail</span>
+                                    <input class="w-full bg-surface-dark/50 border border-input-border text-white rounded-lg h-12 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-500 transition-all outline-none" placeholder="name@fleet.io" type="email"/>
+                                </div>
+                            </label>
+                        </div>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-slate-300 text-sm font-medium">Manifest ID (Optional)</span>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 material-symbols-outlined text-[20px]">qr_code_2</span>
+                                <input class="w-full bg-surface-dark/50 border border-input-border text-white rounded-lg h-12 pl-12 pr-4 focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-500 transition-all outline-none" placeholder="TRK-9920-X" type="text"/>
+                            </div>
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-slate-300 text-sm font-medium">Transmission Details</span>
+                            <textarea class="w-full bg-surface-dark/50 border border-input-border text-white rounded-lg h-32 p-4 focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-500 resize-none transition-all outline-none" placeholder="Describe the anomaly or request..."></textarea>
+                        </label>
+                        <button class="w-full md:w-auto px-10 h-12 bg-primary hover:bg-[#0be0ce] text-slate-900 font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-neon mt-2" type="button">
+                            <span>Send Transmission</span>
+                            <span class="material-symbols-outlined text-sm">send</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right Column: Live Data & Info -->
+                <div class="lg:col-span-5 flex flex-col gap-8">
+                    <!-- Live Chat Card -->
+                    <div class="glass-panel p-6 rounded-xl border-l-4 border-l-primary relative overflow-hidden group">
+                        <div class="absolute right-4 top-4 flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                        </div>
+                        <h3 class="text-white text-lg font-bold mb-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">support_agent</span>
+                            Live Uplink
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-4">Operators are currently online. Average response time: &lt; 2 mins.</p>
+<button onclick="toggleChatWidget()" class="text-primary text-sm font-bold uppercase tracking-wider hover:text-white transition-colors flex items-center gap-1">
+    Initialize Chat <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="space-y-6 px-2">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-surface-dark p-3 rounded-lg border border-border-dark text-primary">
+                                <span class="material-symbols-outlined">share_location</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">HQ Coordinates</p>
+                                <p class="text-white text-lg font-medium leading-snug">
+                                    Terminal 4, Orbital Dock,<br/>
+                                    San Francisco, CA 94107
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-surface-dark p-3 rounded-lg border border-border-dark text-primary">
+                                <span class="material-symbols-outlined">call</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Emergency Signal</p>
+                                <p class="text-white text-lg font-medium">+1 (800) AERO-HBR</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Status Card -->
+                    <div class="mt-4 p-6 rounded-xl border border-dashed border-slate-700 bg-surface-dark/30">
+                        <p class="text-xs text-slate-500 font-mono mb-2">// UPLINK STATUS</p>
+                        <div class="flex items-center gap-3 mb-1">
+                            <div class="h-1.5 flex-1 bg-slate-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-primary w-[98%] shadow-neon"></div>
+                            </div>
+                            <span class="text-primary text-xs font-bold">98%</span>
+                        </div>
+                        <p class="text-xs text-slate-400">All communication nodes operational.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Shared Footer Injection -->
+    <div id="footer-placeholder"></div>
+
+    <!-- LIVE CHAT WIDGET -->
+<div id="live-chat-widget" class="fixed bottom-6 right-6 w-80 md:w-96 bg-[#0b0e11] border border-primary/30 rounded-2xl shadow-[0_0_50px_rgba(13,242,223,0.15)] z-50 hidden flex-col overflow-hidden transition-all duration-300 transform scale-95 opacity-0 origin-bottom-right">
+    
+    <!-- Header -->
+    <div class="bg-[#151a21] p-4 border-b border-white/10 flex justify-between items-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+        <div class="flex items-center gap-3">
+            <div class="relative flex size-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                <span class="relative inline-flex rounded-full size-2.5 bg-success"></span>
+            </div>
+            <div>
+                <span class="font-bold text-white text-sm block leading-none">Mission Control</span>
+                <span class="text-[9px] text-primary font-mono uppercase tracking-wider">Uplink Secure</span>
+            </div>
+        </div>
+        <button onclick="toggleChatWidget()" class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined">close</span></button>
+    </div>
+
+    <!-- Messages Area -->
+    <div id="user-chat-messages" class="h-80 overflow-y-auto p-4 space-y-3 bg-[#0b0e11] flex flex-col scrollbar-hide">
+        <!-- Initial Greeting -->
+        <div class="self-start max-w-[85%] bg-white/5 border border-white/5 rounded-2xl rounded-tl-none px-4 py-3 text-xs text-slate-300">
+             <span class="text-primary font-bold block mb-1 text-[9px] uppercase">System AI</span>
+             Uplink established. An operator will join this frequency shortly. State your inquiry.
+        </div>
+        <!-- JS will inject new messages here -->
+    </div>
+
+    <!-- Input Area -->
+<form id="user-chat-form" class="p-3 bg-[#151a21] border-t border-white/10 flex items-center gap-2">
+    <!-- Hidden File Input -->
+    <input type="file" id="user-chat-file" accept="image/*" class="hidden" onchange="handleImageUpload(this)">
+    
+    <!-- Attachment Trigger Button -->
+    <button type="button" onclick="document.getElementById('user-chat-file').click()" class="text-slate-400 hover:text-primary transition-colors p-1">
+        <span class="material-symbols-outlined text-[20px]">image</span>
+    </button>
+
+    <input type="text" id="user-chat-input" class="flex-1 bg-[#0b0e11] border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:border-primary outline-none" placeholder="Type transmission..." autocomplete="off">
+    
+    <button type="submit" class="bg-primary hover:bg-white text-black size-10 rounded-xl transition-all flex items-center justify-center shadow-neon">
+        <span class="material-symbols-outlined text-lg -rotate-45">send</span>
+    </button>
+</form>
+</div>
+
+<!-- Connect the Logic -->
+<script src="assets/js/contact-chat.js"></script>
+
+</body>
+</html>

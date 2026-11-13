@@ -1,0 +1,55 @@
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-panel">
+    <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 text-white group">
+            <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 border border-primary/20 text-primary group-hover:shadow-neon transition-all">
+                <span class="material-symbols-outlined text-[24px]">rocket_launch</span>
+            </div>
+            <h2 class="text-white text-xl font-bold tracking-tight uppercase">Allcargo</h2>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="index.html">Home</a>
+            <a class="text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="tracking.html">Tracking</a>
+            <a class="text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="logistics.html">Network</a>
+            <a class="text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="services.html">Services</a>
+            <a class="text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="about.html">About</a>
+            <a class="text-slate-300 hover:text-primary text-sm font-medium transition-colors" href="contact.html">Contact</a>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-4">
+            <!-- IMPORTANT: ID added here for JS to find it -->
+            <a id="nav-track-btn" href="tracking.html" class="hidden sm:flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-slate-900 shadow-neon hover:bg-[#0BE3D0] transition-all">
+                <span>Track</span>
+            </a>
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white p-2">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-[#102221] z-[100] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+        
+        <!-- Close Button -->
+        <button id="mobile-menu-close" class="absolute top-6 right-6 text-white p-2">
+            <span class="material-symbols-outlined text-4xl text-primary">close</span>
+        </button>
+        
+        <!-- Links -->
+        <a class="text-2xl font-bold text-slate-300 hover:text-primary transition-colors" href="index.html">Home</a>
+        <a class="text-2xl font-bold text-slate-300 hover:text-primary transition-colors" href="tracking.html">Tracking</a>
+        <a class="text-2xl font-bold text-slate-300 hover:text-primary transition-colors" href="logistics.html">Network</a>
+        <a class="text-2xl font-bold text-slate-300 hover:text-primary transition-colors" href="services.html">Services</a>
+        <a class="text-2xl font-bold text-slate-300 hover:text-primary transition-colors" href="about.html">About</a>
+        <a class="text-2xl font-bold text-slate-300 hover:text-primary transition-colors" href="contact.html">Contact</a>
+        
+        <!-- Action inside menu -->
+        <a href="tracking.html" class="mt-8 flex items-center gap-2 rounded-lg bg-primary px-10 py-4 text-lg font-bold text-slate-900 shadow-neon">
+            Track Shipment
+        </a>
+    </div>
+</header>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+   <head>
+      <meta charset="utf-8"/>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+      <title>Allcargo - Future Logistics</title>
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+      <!-- Material Icons -->
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+      <!-- Tailwind CSS CDN -->
+      <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+      <script src="assets/js/components.js" defer></script>
+<!-- ADD THIS LINE BELOW IT: -->
+<script src="assets/js/tracking.js" defer></script>
+      <!-- Global Custom CSS (The file we just created) -->
+      <link rel="stylesheet" href="assets/css/global.css">
+      <!-- Unified Tailwind Config -->
+      <script>
+         tailwind.config = {
+             darkMode: "class",
+             theme: {
+                 extend: {
+                     colors: {
+                         "primary": "#0df2df",
+                         "background-light": "#f5f8f8",
+                         "background-dark": "#102221",
+                         "surface-dark": "#183432",
+                         "border-dark": "#224946",
+                     },
+                     fontFamily: {
+                         "display": ["Space Grotesk", "sans-serif"],
+                         "body": ["Noto Sans", "sans-serif"],
+                     },
+                     borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                 },
+             },
+         }
+      </script>
+   </head>
+   <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased selection:bg-primary selection:text-slate-deep">
+      
+    <!-- GLOBAL PAGE LOADER -->
+<div id="global-loader">
+    <div class="loader-content">
+        <div class="loader-logo">ALLCARGO</div>
+        <div class="loader-bar-wrapper">
+            <div class="loader-bar"></div>
+        </div>
+        <div class="loader-status">INITIALIZING PROTOCOLS...</div>
+    </div>
+</div>
+      <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+      <!-- Header -->
+      <div id="navbar-placeholder"></div>
+      <!-- Main Content Wrapper -->
+      <main class="flex-grow pt-20">
+
+         <!-- Hero Section -->
+         <section class="relative flex min-h-[85vh] flex-col items-center justify-center overflow-hidden px-4 py-20">
+            <!-- Abstract Background Elements -->
+<!-- Background Grid & Ambient Glow -->
+<div class="absolute inset-0 z-0 bg-background-dark grid-bg opacity-40"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+<!-- Hero Content Wrapper -->
+<div class="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-8 text-center px-4">
+   
+   <!-- Animated Status Badge -->
+   <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-panel border-primary/20 text-primary text-[10px] font-bold uppercase tracking-[0.2em] animate-fade-in shadow-neon">
+      <span class="relative flex h-2 w-2">
+         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+         <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+      </span>
+      <span class="font-mono">Uplink Status: v4.2 Deployment Active</span>
+   </div>
+
+   <!-- Dynamic Typography Heading -->
+   <h1 class="font-display text-6xl md:text-8xl lg:text-9xl font-black uppercase leading-[0.85] tracking-tighter text-white">
+      Track with <br/>
+      <span id="scramble-target" class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-blue-400 drop-shadow-[0_0_20px_rgba(13,242,223,0.4)]">
+         Clarity
+      </span>
+   </h1>
+
+   <!-- Subtitle with delayed fade-in -->
+   <p class="max-w-3xl text-lg font-light leading-relaxed text-slate-400 md:text-2xl animate-fade-in opacity-0" style="animation-delay: 0.8s; animation-fill-mode: forwards;">
+      The first logistics <span class="text-white font-medium italic">Operating System</span>. Real-time transparency, AI-integrated routing, and autonomous infrastructure moving at the speed of thought.
+   </p>
+</div>
+<!-- Hero Tracking Input (Dynamic Redirect) -->
+<div class="mt-12 w-full max-w-2xl transform transition-all duration-500 hover:scale-[1.01]">
+   <div class="relative group">
+      
+      <!-- 1. The Dynamic Pulsing Aura -->
+      <div class="absolute -inset-1 bg-gradient-to-r from-primary via-cyan-400 to-blue-600 rounded-2xl blur-md opacity-20 group-hover:opacity-50 group-focus-within:opacity-100 group-focus-within:blur-xl transition duration-1000"></div>
+      
+      <!-- 2. The Main Input Body -->
+      <div class="relative flex items-center rounded-2xl bg-slate-950/90 p-2 ring-1 ring-white/10 backdrop-blur-2xl overflow-hidden shadow-2xl">
+         
+         <!-- 3. Animated "Scanner" Sweep Effect -->
+         <div class="absolute inset-0 pointer-events-none opacity-0 group-focus-within:opacity-100">
+            <div class="h-full w-[2px] bg-primary/40 blur-[2px] absolute animate-[scan_3s_linear_infinite]"></div>
+         </div>
+
+         <!-- 4. The Leading Icon -->
+         <div class="flex h-14 w-14 items-center justify-center rounded-xl text-primary relative">
+            <span class="material-symbols-outlined text-[32px] transition-transform duration-1000 group-focus-within:rotate-[360deg]">radar</span>
+            <span class="absolute top-4 right-4 flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+         </div>
+
+         <!-- 5. The Input Field (With Enter Key Support) -->
+         <input 
+            id="hero-track-input"
+            type="text" 
+            class="w-full border-none bg-transparent px-4 text-xl font-medium text-white placeholder-slate-600 focus:outline-none focus:ring-0 tracking-wide" 
+            placeholder="Enter Manifest ID (e.g. AH-9021)..."
+            onkeypress="if(event.key === 'Enter') submitHeroTracking()"
+         />
+
+         <!-- 6. Action Buttons -->
+         <!-- Desktop: Shimmering Button -->
+         <button onclick="submitHeroTracking()" class="hidden sm:flex h-14 items-center gap-3 rounded-xl bg-primary px-10 text-lg font-black text-slate-950 transition-all hover:bg-white hover:shadow-[0_0_30px_rgba(13,242,223,0.6)] active:scale-95 group/btn overflow-hidden relative">
+            <span class="relative z-10">TRACK</span>
+            <span class="material-symbols-outlined relative z-10 text-xl group-hover/btn:translate-x-1 transition-transform">analytics</span>
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+         </button>
+
+         <!-- Mobile: Icon Only Button -->
+         <button onclick="submitHeroTracking()" class="flex sm:hidden h-14 w-14 items-center justify-center rounded-xl bg-primary text-slate-950 transition-all shadow-neon active:scale-90">
+            <span class="material-symbols-outlined font-bold">search</span>
+         </button>
+      </div>
+
+      <!-- 7. Status Indicators -->
+      <div class="mt-4 flex justify-center gap-8">
+         <div class="flex items-center gap-2 group/status cursor-default">
+            <div class="size-2 rounded-full bg-primary group-hover:scale-150 transition-transform shadow-neon"></div>
+            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] group-hover:text-primary transition-colors">Quantum Link Active</span>
+         </div>
+         <div class="flex items-center gap-2 group/status cursor-default">
+            <div class="size-2 rounded-full bg-blue-500 group-hover:scale-150 transition-transform"></div>
+            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] group-hover:text-blue-400 transition-colors">Satellite Verified</span>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Inline Script for the Redirect Logic -->
+<script>
+function submitHeroTracking() {
+    // 1. Get what the user typed
+    const input = document.getElementById('hero-track-input');
+    const userTypedId = input.value.trim().toUpperCase(); // Force Uppercase (AH-123)
+
+    if (userTypedId.length === 0) {
+        alert("Please enter a Tracking ID");
+        return;
+    }
+
+    // 2. Open the "Notebook" (LocalStorage)
+    // We look for the exact key we set in the Admin Dashboard
+    const database = JSON.parse(localStorage.getItem("allcargo_shipments") || "[]");
+
+    // 3. Search for the ID
+    const shipmentFound = database.find(item => item.id === userTypedId);
+
+    // 4. Decide what to do
+    if (shipmentFound) {
+        // SUCCESS: The ID exists! Send them to the tracking page.
+        // We add ?id=... so the next page knows which shipment to show.
+        window.location.href = `tracking.html?id=${encodeURIComponent(userTypedId)}`;
+    } else {
+        // FAIL: ID not found. Show visual error.
+        input.value = ""; // Clear text
+        input.placeholder = "INVALID ID - TRY AGAIN"; // Change placeholder text
+        input.classList.add("placeholder-red-500", "border-red-500", "ring-red-500"); // Make it red
+        
+        // Reset styles after 2 seconds
+        setTimeout(() => {
+            input.placeholder = "Enter Manifest ID (e.g. AH-9021)...";
+            input.classList.remove("placeholder-red-500", "border-red-500", "ring-red-500");
+        }, 2000);
+    }
+}
+</script>
+               <!-- Abstract Map Graphic -->
+               <div aria-hidden="true" class="relative mt-20 w-full max-w-6xl opacity-80">
+                  <svg class="w-full h-auto drop-shadow-[0_0_30px_rgba(13,242,223,0.1)]" fill="none" viewbox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg">
+                     <!-- Abstract Continents/Landmasses -->
+                     <path d="M150 200 Q 250 150 350 200 T 550 200 T 750 200 T 950 200" fill="none" opacity="0.3" stroke="#316863" stroke-width="2"></path>
+                     <path d="M100 250 Q 300 350 500 250 T 900 250" fill="none" opacity="0.2" stroke="#316863" stroke-width="2"></path>
+                     <path d="M200 150 Q 400 50 600 150 T 1000 150" fill="none" opacity="0.2" stroke="#316863" stroke-width="2"></path>
+                     <!-- Connection Lines -->
+                     <path class="tracking-route" d="M250 180 C 350 100, 550 100, 650 180" fill="none" stroke="url(#gradient-line)" stroke-width="2"></path>
+                     <path class="tracking-route" d="M650 180 C 700 250, 800 250, 850 180" fill="none" stroke="url(#gradient-line)" stroke-width="2" style="animation-delay: 1s"></path>
+                     <path class="tracking-route" d="M250 180 C 300 280, 500 280, 650 180" fill="none" stroke="url(#gradient-line-2)" stroke-width="2" style="animation-delay: 0.5s"></path>
+                     <!-- Nodes -->
+                     <circle class="map-dot" cx="250" cy="180" fill="#0df2df" r="4"></circle>
+                     <circle class="map-dot" cx="650" cy="180" fill="#0df2df" r="4" style="animation-delay: 1s"></circle>
+                     <circle class="map-dot" cx="850" cy="180" fill="#0df2df" r="4" style="animation-delay: 2s"></circle>
+                     <defs>
+                        <lineargradient id="gradient-line" x1="0%" x2="100%" y1="0%" y2="0%">
+                           <stop offset="0%" stop-color="#0df2df" stop-opacity="0"></stop>
+                           <stop offset="50%" stop-color="#0df2df" stop-opacity="1"></stop>
+                           <stop offset="100%" stop-color="#0df2df" stop-opacity="0"></stop>
+                        </lineargradient>
+                        <lineargradient id="gradient-line-2" x1="0%" x2="100%" y1="0%" y2="0%">
+                           <stop offset="0%" stop-color="#90cbc6" stop-opacity="0"></stop>
+                           <stop offset="50%" stop-color="#90cbc6" stop-opacity="1"></stop>
+                           <stop offset="100%" stop-color="#90cbc6" stop-opacity="0"></stop>
+                        </lineargradient>
+                     </defs>
+                  </svg>
+                  <!-- Floating Data Cards on Map -->
+                  <div class="absolute top-10 left-[20%] hidden lg:flex items-center gap-3 rounded-lg border border-primary/20 bg-slate-900/80 px-4 py-2 backdrop-blur-md">
+                     <span class="material-symbols-outlined text-primary">flight_takeoff</span>
+                     <div class="flex flex-col">
+                        <span class="text-xs text-slate-400">Flight AH-201</span>
+                        <span class="text-sm font-bold text-white">In Transit: Tokyo</span>
+                     </div>
+                  </div>
+                  <div class="absolute bottom-20 right-[20%] hidden lg:flex items-center gap-3 rounded-lg border border-primary/20 bg-slate-900/80 px-4 py-2 backdrop-blur-md">
+                     <span class="material-symbols-outlined text-primary">directions_boat</span>
+                     <div class="flex flex-col">
+                        <span class="text-xs text-slate-400">Vessel SeaKing</span>
+                        <span class="text-sm font-bold text-white">Docked: Rotterdam</span>
+                     </div>
+                  </div>
+               </div>
+         </section>
+         <!-- Stats Section: Real-Time Network Analytics -->
+         <!-- Stats Section: Real-Time Network Analytics -->
+         <section id="stats-section" class="border-y border-white/5 bg-slate-950/50 relative overflow-hidden">
+         <!-- Subtle Background Data Stream -->
+         <div class="absolute inset-0 opacity-10 pointer-events-none grid-bg"></div>
+         <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8 relative z-10">
+         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+         <!-- Stat 1: Network Throughput -->
+         <div class="group glass-panel p-8 rounded-3xl stat-card transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:bg-surface-dark/40">
+         <div class="flex items-start justify-between mb-6">
+         <div class="space-y-1">
+         <p class="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Live Throughput</p>
+         <h3 class="text-slate-100 text-lg font-bold">Network Assets</h3>
+         </div>
+         <div class="size-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:animate-bounce">
+         <span class="material-symbols-outlined">package_2</span>
+         </div>
+         </div>
+         <div class="relative mb-4">
+         <p class="font-display text-5xl font-black text-white tracking-tighter neon-text">
+         14,021<span class="text-primary text-xl ml-1">v</span>
+         </p>
+         </div>
+         <!-- Animated Progress Bar -->
+         <div class="space-y-2">
+         <div class="flex justify-between text-[10px] font-bold uppercase text-slate-500">
+         <span>Capacity</span>
+         <span class="text-primary">82%</span>
+         </div>
+         <div class="h-1.5 w-full rounded-full bg-slate-800/50 overflow-hidden border border-white/5">
+         <!-- The progress-bar-container starts at 0% (CSS) and fills to data-percent (JS) -->
+         <div class="h-full bg-gradient-to-r from-primary to-cyan-400 rounded-full shadow-neon progress-bar-container" data-percent="82%"></div>
+         </div>
+         </div>
+         </div>
+         <!-- Stat 2: Operational Precision -->
+         <div class="group glass-panel p-8 rounded-3xl stat-card transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:bg-surface-dark/40">
+         <div class="flex items-start justify-between mb-6">
+         <div class="space-y-1">
+         <p class="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Reliability Index</p>
+         <h3 class="text-slate-100 text-lg font-bold">Delivery Precision</h3>
+         </div>
+         <div class="size-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:rotate-[360deg] transition-transform duration-1000">
+         <span class="material-symbols-outlined">verified</span>
+         </div>
+         </div>
+         <div class="relative mb-4">
+         <p class="font-display text-5xl font-black text-white tracking-tighter neon-text">
+         99.98<span class="text-primary text-xl ml-1">%</span>
+         </p>
+         </div>
+         <!-- Animated Progress Bar -->
+         <div class="space-y-2">
+         <div class="flex justify-between text-[10px] font-bold uppercase text-slate-500">
+         <span>SLA Compliance</span>
+         <span class="text-primary">99%</span>
+         </div>
+         <div class="h-1.5 w-full rounded-full bg-slate-800/50 overflow-hidden border border-white/5">
+         <div class="h-full bg-gradient-to-r from-primary to-cyan-400 rounded-full shadow-neon progress-bar-container" data-percent="99.9%"></div>
+         </div>
+         </div>
+         </div>
+         <!-- Stat 3: Global Node Connectivity -->
+         <div class="group glass-panel p-8 rounded-3xl stat-card transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:bg-surface-dark/40">
+         <div class="flex items-start justify-between mb-6">
+         <div class="space-y-1">
+         <p class="text-primary text-[10px] font-black uppercase tracking-[0.2em]">Global Footprint</p>
+         <h3 class="text-slate-100 text-lg font-bold">Active Hubs</h3>
+         </div>
+         <div class="size-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-125 transition-transform">
+         <span class="material-symbols-outlined">language</span>
+         </div>
+         </div>
+         <div class="relative mb-4">
+         <p class="font-display text-5xl font-black text-white tracking-tighter neon-text">
+         240<span class="text-primary text-xl ml-1">Nodes</span>
+         </p>
+         </div>
+         <!-- Animated Progress Bar -->
+         <div class="space-y-2">
+         <div class="flex justify-between text-[10px] font-bold uppercase text-slate-500">
+         <span>Coverage</span>
+         <span class="text-primary">140 Countries</span>
+         </div>
+         <div class="h-1.5 w-full rounded-full bg-slate-800/50 overflow-hidden border border-white/5">
+         <div class="h-full bg-gradient-to-r from-primary to-cyan-400 rounded-full shadow-neon progress-bar-container" data-percent="75%"></div>
+         </div>
+         </div>
+         </div>
+         </div>
+         </div>
+         </section>
+         <!-- Partners Section -->
+         <section class="border-b border-white/5 bg-slate-950/30 py-12 overflow-hidden">
+         <div class="mx-auto max-w-7xl px-6 lg:px-8">
+         <p class="text-center text-[10px] font-black text-slate-500 mb-10 uppercase tracking-[0.4em]">
+         Strategic Integration Partners
+         </p>
+         <div class="marquee-container">
+         <div class="marquee-content">
+         <!-- Logo 1: Oceanic -->
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+         <span>OCEANIC<span class="text-primary">.</span></span>
+         </div>
+         <!-- Logo 2: Titan -->
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zM11 7h2v10h-2V7z"/></svg>
+         <span>TITAN<span class="text-blue-500">HEAVY</span></span>
+         </div>
+         <!-- Logo 3: Zenon -->
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-cyan-400" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+         <span>ZENON<span class="text-cyan-400">AIR</span></span>
+         </div>
+         <!-- Logo 4: Atlas -->
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+         <span>ATLAS<span class="opacity-50">ROAD</span></span>
+         </div>
+         <!-- Logo 5: Nexus -->
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.45L20.15 19H3.85L12 5.45z"/></svg>
+         <span>NEXUS<span class="text-primary">_</span>RAIL</span>
+         </div>
+         </div>
+         <!-- Duplicate Content for seamless loop -->
+         <div class="marquee-content" aria-hidden="true">
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+         <span>OCEANIC<span class="text-primary">.</span></span>
+         </div>
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zM11 7h2v10h-2V7z"/></svg>
+         <span>TITAN<span class="text-blue-500">HEAVY</span></span>
+         </div>
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-cyan-400" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+         <span>ZENON<span class="text-cyan-400">AIR</span></span>
+         </div>
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+         <span>ATLAS<span class="opacity-50">ROAD</span></span>
+         </div>
+         <div class="partner-logo">
+         <svg class="w-8 h-8 text-primary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.45L20.15 19H3.85L12 5.45z"/></svg>
+         <span>NEXUS<span class="text-primary">_</span>RAIL</span>
+         </div>
+         </div>
+         </div>
+         </div>
+         </section>
+<!-- Section 3: Features - Architected for Velocity -->
+<section class="py-24 relative overflow-hidden bg-background-dark border-t border-white/5">
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+    
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+            <div class="space-y-6">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-xs">Proprietary Infrastructure</h2>
+                <h3 class="text-5xl lg:text-7xl font-black text-white leading-[0.9] uppercase tracking-tighter">
+                    Built for <span class="italic text-primary">Velocity.</span><br/>
+                    Designed for <span class="text-slate-400">Precision.</span>
+                </h3>
+                <p class="text-slate-400 text-lg max-w-xl">
+                    Allcargo isn't just a shipping service. It is a high-frequency logistics backbone designed to eliminate latency in the global supply chain.
+                </p>
+            </div>
+            
+            <!-- Cooler Feature Visual -->
+            <div class="relative group">
+                <div class="absolute -inset-4 bg-primary/20 rounded-[3rem] blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                <div class="glass-panel p-4 rounded-[2.5rem] animate-float relative z-10">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2bqwTEeABPLNpRRASdp4B9XU3na8Zdd29kuptGR4gITaJ34Ll3UlMEJX0J6asgOvPvalL1vywQyORxCMQBhK3GWTN8FdhB9-Jfjh3Rw_rFZLK0rj_JF0OpwcQ5MgdRHksyDxDt1L5gyf7zUEIpR69rQtVZCp2wAmWt7SUOFKBNjhPIgBWVYgYiE6uxAAf0DPP36BjkPgHw0ogHZDC4JklW0bQyI9cELxGtKRFHDHSV-PI5Y3dog5FAVLondaZkiS_Ck98Cz333G7J" 
+                         class="rounded-[2rem] w-full object-cover img-tech-overlay brightness-75 group-hover:brightness-100 transition-all duration-700" 
+                         alt="Futuristic Logistics Terminal">
+                    <!-- Overlay HUD -->
+                    <div class="absolute top-10 left-10 glass-panel px-4 py-2 rounded-lg border-primary/30">
+                        <p class="text-[10px] text-primary font-mono uppercase tracking-widest">Autonomous_Active</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Cards with Spotlight Effect -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="spotlight-card glass-panel p-10 rounded-[2rem] transition-all hover:border-primary/50 group stat-card">
+                <div class="size-14 rounded-2xl bg-slate-800 border border-white/5 flex items-center justify-center text-primary mb-8 group-hover:shadow-neon transition-all">
+                    <span class="material-symbols-outlined text-3xl">analytics</span>
+                </div>
+                <h4 class="text-2xl font-bold text-white mb-4">Real-Time Data</h4>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Monitor your fleet with millisecond precision from our glass dashboard. Predictive AI catches delays before they trigger.
+                </p>
+            </div>
+
+            <div class="spotlight-card glass-panel p-10 rounded-[2rem] transition-all hover:border-primary/50 group stat-card">
+                <div class="size-14 rounded-2xl bg-slate-800 border border-white/5 flex items-center justify-center text-primary mb-8 group-hover:shadow-neon transition-all">
+                    <span class="material-symbols-outlined text-3xl">globe_uk</span>
+                </div>
+                <h4 class="text-2xl font-bold text-white mb-4">Global Nodes</h4>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Direct integration with 240+ ports. Our API unifies customs, routing, and carrier data into a single verified stream.
+                </p>
+            </div>
+
+            <div class="spotlight-card glass-panel p-10 rounded-[2rem] transition-all hover:border-primary/50 group stat-card">
+                <div class="size-14 rounded-2xl bg-slate-800 border border-white/5 flex items-center justify-center text-primary mb-8 group-hover:shadow-neon transition-all">
+                    <span class="material-symbols-outlined text-3xl">verified_user</span>
+                </div>
+                <h4 class="text-2xl font-bold text-white mb-4">Secure Cargo</h4>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Blockchain-verified custody chains ensure assets are never lost. Immutable records for every intermodal handover.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 4: Testimonials - Network Intelligence -->
+<section class="py-24 bg-slate-950/40 border-y border-white/5 relative overflow-hidden">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+            <h2 class="text-primary font-bold tracking-widest uppercase text-xs">Operations Feedback</h2>
+            <h3 class="text-4xl lg:text-6xl font-black text-white uppercase tracking-tighter">Verified by <span class="text-slate-500">Industry Leaders</span></h3>
+            <p class="text-slate-400">Real performance data from global supply chain directors.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="glass-panel p-8 rounded-3xl space-y-6 flex flex-col stat-card">
+                <div class="flex gap-1 text-primary">
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                </div>
+                <p class="text-slate-200 italic leading-relaxed">
+                    "Transitioning to Allcargo's OS reduced our cross-border latency by 42%. The transparency is unlike anything in traditional logistics."
+                </p>
+                <div class="flex items-center gap-4 pt-4 mt-auto border-t border-white/5">
+                    <div class="size-12 rounded-full bg-slate-800 border border-primary/20"></div>
+                    <div>
+                        <h5 class="text-white font-bold text-sm">Marcus V.</h5>
+                        <p class="text-[10px] text-primary font-mono uppercase">Logistics Dir. @ Nexa_Air</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="glass-panel p-8 rounded-3xl space-y-6 flex flex-col stat-card border-primary/30">
+                <div class="flex gap-1 text-primary">
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                </div>
+                <p class="text-slate-200 italic leading-relaxed">
+                    "The blockchain ledger solved our insurance claim bottlenecks. We now have immutable proof for every intermodal handover."
+                </p>
+                <div class="flex items-center gap-4 pt-4 mt-auto border-t border-white/5">
+                    <div class="size-12 rounded-full bg-slate-800 border border-primary/20"></div>
+                    <div>
+                        <h5 class="text-white font-bold text-sm">Elena R.</h5>
+                        <p class="text-[10px] text-primary font-mono uppercase">COO @ Global_Sea</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="glass-panel p-8 rounded-3xl space-y-6 flex flex-col stat-card">
+                <div class="flex gap-1 text-primary">
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                    <span class="material-symbols-outlined !text-sm">star</span>
+                </div>
+                <p class="text-slate-200 italic leading-relaxed">
+                    "Mach-speed is an understatement. Our high-priority assets moved through 4 hubs in under 24 hours with zero manual intervention."
+                </p>
+                <div class="flex items-center gap-4 pt-4 mt-auto border-t border-white/5">
+                    <div class="size-12 rounded-full bg-slate-800 border border-primary/20"></div>
+                    <div>
+                        <h5 class="text-white font-bold text-sm">Jason K.</h5>
+                        <p class="text-[10px] text-primary font-mono uppercase">VP Ops @ Titan_Heavy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section 5: Interactive Video CTA -->
+<section class="relative py-24 overflow-hidden border-t border-white/5">
+    <!-- Background grid -->
+    <div class="absolute inset-0 z-0 bg-slate-deep opacity-40 grid-bg"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/5 rounded-full blur-[150px] pointer-events-none"></div>
+
+    <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="overflow-hidden rounded-[3rem] border border-white/10 bg-slate-950/80 backdrop-blur-xl shadow-2xl lg:grid lg:grid-cols-2">
+            
+            <!-- Left: Text Content -->
+            <div class="px-8 py-16 sm:px-12 lg:py-20 flex flex-col justify-center space-y-8">
+                <div class="inline-flex items-center gap-2 text-primary font-mono text-[10px] uppercase tracking-[0.3em]">
+                    <span class="size-2 bg-primary rounded-full animate-pulse"></span>
+                    Terminal_Access_Granted
+                </div>
+                <h2 class="text-4xl lg:text-6xl font-black tracking-tighter text-white uppercase leading-none">
+                    Ready to <span class="text-primary italic">Synchronize?</span>
+                </h2>
+                <p class="text-slate-400 text-lg leading-relaxed max-w-md">
+                    Connect your enterprise to the Allcargo OS. 500+ global partners are already moving assets at Mach-Speed.
+                </p>
+                <div class="flex flex-wrap items-center gap-6 pt-4">
+                    <button class="rounded-2xl bg-primary px-10 py-5 text-base font-black text-slate-950 shadow-neon hover:scale-105 transition-all">
+                        Initialize Onboarding
+                    </button>
+                    <a class="text-base font-bold text-white hover:text-primary transition-colors flex items-center gap-2 group" href="#">
+                        Contact Mission Control 
+                        <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: Interactive Video Player -->
+            <div class="relative h-[400px] lg:h-full border-t lg:border-t-0 lg:border-l border-white/10 bg-black group overflow-hidden">
+                <!-- Main Video Element -->
+<video class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-1000 grayscale group-hover:grayscale-0" 
+       autoplay muted loop playsinline>
+    <!-- Use a DIRECT link to a video file here -->
+    <source src="YOUR_DIRECT_VIDEO_LINK_HERE.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+                <!-- Futuristic Overlays -->
+                <div class="absolute inset-0 video-overlay-terminal"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                
+                <!-- Play/Interaction Widget -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="size-20 rounded-full border-2 border-primary/40 flex items-center justify-center backdrop-blur-md group-hover:scale-110 group-hover:border-primary transition-all duration-500 cursor-pointer relative">
+                        <div class="absolute inset-0 rounded-full animate-ping bg-primary opacity-20"></div>
+                        <span class="material-symbols-outlined text-primary text-4xl translate-x-0.5">play_arrow</span>
+                    </div>
+                </div>
+
+                <!-- Live Data HUD in Video -->
+                <div class="absolute bottom-6 left-6 flex flex-col gap-1">
+                    <p class="text-[9px] font-mono text-primary uppercase">Satellite_Feed_Active</p>
+                    <p class="text-white text-xs font-bold tracking-widest uppercase">Global_Hub_04 (Rotterdam)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 6: Next-Gen Fulfillment Hubs (New Added Section) -->
+<section class="py-24 relative overflow-hidden bg-background-dark border-b border-white/5">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div class="max-w-xl space-y-4">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-xs">Autonomous Readiness</h2>
+                <h3 class="text-4xl lg:text-5xl font-black text-white uppercase tracking-tighter">Operational Nodes</h3>
+            </div>
+            <button class="glass-panel px-6 py-3 rounded-xl text-xs font-bold hover:bg-white/5 transition-all">View All Hubs</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Node Card 1 -->
+            <div class="glass-panel p-8 rounded-3xl group hover:border-primary/50 transition-all stat-card">
+                <div class="aspect-video rounded-2xl mb-6 overflow-hidden border border-white/5 relative">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzAaCNGd63BDmAwchEaoch0GDivOMUidFRmHimX2yFJ9ALcqzwbWsvSaq5LLjUJ55MRt2DtM8PY9oUZ5omUCXPaxVasS55MrWIjvT8UwcJO-ZLk4peMCavCh5n7rOVJwXdQPx7iQtOroAyxNgl07MFJ142dLhnJRFZY0uzaWZsSerNhoW994lJcN6w_3YY5cK8Ezk4-ITHnsznqJ0etWJ4JIJqlPqG1W7yXKMQLK8YhlbdoK_ZpQI2v7omGMFUjn4LL9EY3XQRUJVa" 
+                         class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700" alt="Fulfillment center">
+                    <div class="absolute top-4 right-4 bg-primary text-slate-950 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">98% Efficient</div>
+                </div>
+                <h4 class="text-xl font-black text-white uppercase mb-2">Automated Sorting</h4>
+                <p class="text-slate-500 text-sm leading-relaxed">Robotic picking systems capable of handling 50k+ units per hour with near-zero latency.</p>
+            </div>
+
+            <!-- Node Card 2 -->
+            <div class="glass-panel p-8 rounded-3xl group hover:border-primary/50 transition-all stat-card">
+                <div class="aspect-video rounded-2xl mb-6 overflow-hidden border border-white/5 relative">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2bqwTEeABPLNpRRASdp4B9XU3na8Zdd29kuptGR4gITaJ34Ll3UlMEJX0J6asgOvPvalL1vywQyORxCMQBhK3GWTN8FdhB9-Jfjh3Rw_rFZLK0rj_JF0OpwcQ5MgdRHksyDxDt1L5gyf7zUEIpR69rQtVZCp2wAmWt7SUOFKBNjhPIgBWVYgYiE6uxAAf0DPP36BjkPgHw0ogHZDC4JklW0bQyI9cELxGtKRFHDHSV-PI5Y3dog5FAVLondaZkiS_Ck98Cz333G7J" 
+                         class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700" alt="Cargo Ship">
+                    <div class="absolute top-4 right-4 bg-primary text-slate-950 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">IoT Verified</div>
+                </div>
+                <h4 class="text-xl font-black text-white uppercase mb-2">Smart Staging</h4>
+                <p class="text-slate-500 text-sm leading-relaxed">Distributed staging environments that anticipate carrier arrivals before they dock.</p>
+            </div>
+
+            <!-- Node Card 3 -->
+            <div class="glass-panel p-8 rounded-3xl group hover:border-primary/50 transition-all stat-card">
+                <div class="aspect-video rounded-2xl mb-6 overflow-hidden border border-white/5 relative">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2bqwTEeABPLNpRRASdp4B9XU3na8Zdd29kuptGR4gITaJ34Ll3UlMEJX0J6asgOvPvalL1vywQyORxCMQBhK3GWTN8FdhB9-Jfjh3Rw_rFZLK0rj_JF0OpwcQ5MgdRHksyDxDt1L5gyf7zUEIpR69rQtVZCp2wAmWt7SUOFKBNjhPIgBWVYgYiE6uxAAf0DPP36BjkPgHw0ogHZDC4JklW0bQyI9cELxGtKRFHDHSV-PI5Y3dog5FAVLondaZkiS_Ck98Cz333G7J" 
+                         class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700" alt="Cargo Ship">
+                    <div class="absolute top-4 right-4 bg-primary text-slate-950 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-tighter">IoT Verified</div>
+                </div>
+                <h4 class="text-xl font-black text-white uppercase mb-2">Smart Staging</h4>
+                <p class="text-slate-500 text-sm leading-relaxed">Distributed staging environments that anticipate carrier arrivals before they dock.</p>
+            </div>
+        </div>
+    </div>
+</section>
+      </main>
+      <!-- Footer -->
+      <div id="footer-placeholder"></div>
+      </div>
+      <script>
+// --- REAL-TIME VISITOR REPORTER ---
+(function reportVisit() {
+    const visitorKey = "allcargo_visitors";
+    const visitData = {
+        ip: "102." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + ".1", // Mock IP
+        location: "Lagos, NG",
+        page: "Index Page",
+        time: new Date().toLocaleTimeString(),
+        status: "Active"
+    };
+
+    let history = JSON.parse(localStorage.getItem(visitorKey) || "[]");
+    history.unshift(visitData); // Add to top
+    if (history.length > 15) history.pop(); // Keep it clean
+    localStorage.setItem(visitorKey, JSON.stringify(history));
+})();
+
+// --- CONNECTED SEARCH LOGIC ---
+function submitHeroTracking() {
+    const input = document.getElementById('hero-track-input');
+    const id = input.value.trim().toUpperCase();
+
+    // Check the Admin Database (LocalStorage)
+    const db = JSON.parse(localStorage.getItem("allcargo_shipments") || "[]");
+    const found = db.find(s => s.id.toUpperCase() === id);
+
+    if (found) {
+        window.location.href = `tracking.html?id=${encodeURIComponent(id)}`;
+    } else {
+        input.value = "";
+        input.placeholder = "ID NOT FOUND IN SYSTEM";
+        input.classList.add("placeholder-red-500");
+        setTimeout(() => input.classList.remove("placeholder-red-500"), 2000);
+    }
+}
+</script>
+   </body>
+</html>
