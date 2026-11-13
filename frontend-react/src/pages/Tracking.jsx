@@ -97,6 +97,7 @@ export default function Tracking() {
   const [error, setError] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
   const [toastText, setToastText] = useState(null);
+  const [isTimelineModalOpen, setIsTimelineModalOpen] = useState(false);
 
   const triggerToast = (msg) => {
     setToastText(msg);
@@ -597,70 +598,96 @@ export default function Tracking() {
                </div>
 
                {/* Right: Timeline Card */}
-               <div className="bg-white rounded-3xl shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-slate-100 p-6 flex flex-col h-[450px]">
-                 <div className="flex items-center justify-between mb-8">
-                    <h3 className="text-lg font-bold text-slate-900">Shipment Progress</h3>
-                    <Link to="#" className="text-primary text-sm font-bold flex items-center gap-1 hover:text-primary-light transition-colors">
-                      View Full Timeline <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-                    </Link>
-                 </div>
-                 
-                 <div className="relative flex-grow overflow-y-auto pr-2 custom-scrollbar pl-2">
-                   {/* Continuous Vertical Line */}
-                   <div className="absolute left-[13px] top-4 bottom-8 w-[2px] bg-slate-100 z-0"></div>
+                <div className="bg-white rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-slate-100 p-6 flex flex-col h-[480px]">
+                  {/* Card Header */}
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div className="flex items-center gap-2.5">
+                      <div className="size-9 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100 shrink-0">
+                        <span className="material-symbols-outlined text-lg">route</span>
+                      </div>
+                      <div>
+                        <h3 className="text-base font-bold text-slate-900 leading-tight whitespace-nowrap">Shipment Progress</h3>
+                        <p className="text-[11px] font-medium text-slate-400">Live milestone telemetry</p>
+                      </div>
+                    </div>
+                    
+                    <button 
+                      onClick={() => setIsTimelineModalOpen(true)}
+                      className="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 cursor-pointer whitespace-nowrap bg-emerald-50/60 hover:bg-emerald-50 px-2.5 py-1.5 rounded-xl border border-emerald-200/60 transition-all active:scale-95"
+                    >
+                      <span>Full Log</span>
+                      <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
+                    </button>
+                  </div>
+                  
+                  {/* Timeline Rail & Steps */}
+                  <div className="relative flex-grow overflow-y-auto pr-1.5 custom-scrollbar pl-1">
+                    {/* Continuous Vertical Rail */}
+                    <div className="absolute left-[13px] top-3 bottom-6 w-[2px] bg-slate-100 z-0"></div>
 
-                   <div className="space-y-6">
-                     {shipment.history.map((item, idx) => (
-                       <div key={idx} className="relative z-10 flex gap-4">
-                         
-                         {/* Status Icon */}
-                         <div className="shrink-0 mt-0.5 relative">
-                           {item.state === 'completed' && (
-                             <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white ring-4 ring-white">
-                               <span className="material-symbols-outlined text-[16px] font-bold">check</span>
-                             </div>
-                           )}
-                           {item.state === 'current' && (
-                             <div className="w-7 h-7 rounded-full border-2 border-primary bg-white flex items-center justify-center ring-4 ring-white">
-                               <div className="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"></div>
-                             </div>
-                           )}
-                           {item.state === 'upcoming' && (
-                             <div className="w-7 h-7 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center ring-4 ring-white">
-                             </div>
-                           )}
-                         </div>
+                    <div className="space-y-4">
+                      {shipment.history.map((item, idx) => {
+                        const isCompleted = item.state === 'completed';
+                        const isCurrent = item.state === 'current';
+                        const isUpcoming = item.state === 'upcoming';
 
-                         {/* Details */}
-                         <div className="flex-grow pb-2">
-                           <div className="flex items-start justify-between gap-4">
-                             <div>
-                               <p className={`text-sm font-bold ${item.state === 'upcoming' ? 'text-slate-600' : 'text-slate-900'}`}>{item.status}</p>
-                               <p className="text-xs text-slate-500 font-medium mt-1">{item.date}</p>
-                             </div>
-                             <div className="text-right shrink-0">
-                               {item.state === 'current' && (
-                                 <span className="inline-block px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold uppercase rounded mb-1">
-                                   Current Location
-                                 </span>
-                               )}
-                               <p className={`text-xs ${item.state === 'current' ? 'text-primary font-bold' : 'text-slate-500 font-medium'}`}>
-                                 {item.location}
-                               </p>
-                             </div>
-                           </div>
-                           {item.description && (
-                             <p className="text-xs text-slate-500 mt-2 font-medium">{item.description}</p>
-                           )}
-                         </div>
+                        return (
+                          <div key={idx} className="relative z-10 flex items-start gap-3.5 group">
+                            {/* Status Icon */}
+                            <div className="shrink-0 mt-0.5 relative">
+                              {isCompleted && (
+                                <div className="size-7 rounded-full bg-emerald-500 flex items-center justify-center text-white ring-4 ring-white shadow-xs">
+                                  <span className="material-symbols-outlined text-[15px] font-bold">check</span>
+                                </div>
+                              )}
+                              {isCurrent && (
+                                <div className="size-7 rounded-full border-2 border-emerald-500 bg-white flex items-center justify-center ring-4 ring-emerald-50 shadow-xs">
+                                  <div className="size-2.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                                </div>
+                              )}
+                              {isUpcoming && (
+                                <div className="size-7 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center ring-4 ring-white">
+                                  <div className="size-1.5 bg-slate-300 rounded-full"></div>
+                                </div>
+                              )}
+                            </div>
 
-                       </div>
-                     ))}
-                   </div>
-                 </div>
-               </div>
+                            {/* Details Card */}
+                            <div className={`flex-1 min-w-0 p-3 rounded-2xl transition-colors ${isCurrent ? 'bg-emerald-50/40 border border-emerald-100/80 shadow-2xs' : 'hover:bg-slate-50/60'}`}>
+                              <div className="flex items-center justify-between gap-2">
+                                <p className={`text-sm font-bold truncate ${isUpcoming ? 'text-slate-400' : 'text-slate-900'}`}>
+                                  {item.status}
+                                </p>
+                                <span className="text-[10px] text-slate-400 font-medium shrink-0">
+                                  {item.date}
+                                </span>
+                              </div>
 
-            </div>
+                              <div className="flex items-center justify-between gap-2 mt-1">
+                                <span className="text-xs text-slate-500 font-medium flex items-center gap-1 truncate">
+                                  <span className="material-symbols-outlined text-[13px] text-slate-400 shrink-0">location_on</span>
+                                  <span className="truncate">{item.location}</span>
+                                </span>
+
+                                {isCurrent && (
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-500 text-white text-[9px] font-bold uppercase tracking-wider rounded-full shadow-2xs shrink-0">
+                                    <span className="size-1.5 rounded-full bg-white animate-ping"></span>
+                                    Current
+                                  </span>
+                                )}
+                              </div>
+
+                              {item.description && (
+                                <p className="text-xs text-slate-500 mt-1.5 font-medium leading-relaxed">{item.description}</p>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
           </motion.div>
         )}
 
