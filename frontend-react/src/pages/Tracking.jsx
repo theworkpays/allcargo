@@ -387,100 +387,73 @@ export default function Tracking() {
                 </div>
               </div>
 
-              {/* Route Corridor Banner: Origin ── ✈ ── Destination */}
-              <div className="bg-slate-50/60 border-b border-slate-100 p-4 sm:p-6">
-                <div className="flex items-center justify-between gap-2 sm:gap-6 relative">
-                  
+              {/* Route Corridor: Simple, Clean & Never Truncated */}
+              <div className="bg-slate-50/60 border-b border-slate-100 px-5 py-4 sm:px-8 sm:py-5">
+                <div className="flex items-center justify-between gap-3 sm:gap-6">
                   {/* Origin */}
-                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                    <div className="size-9 sm:size-11 rounded-xl bg-white border border-emerald-200/90 shadow-xs flex items-center justify-center text-emerald-600 shrink-0">
-                      <span className="material-symbols-outlined text-lg sm:text-xl">flight_takeoff</span>
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                        <span className="size-1.5 rounded-full bg-emerald-500"></span> Origin
-                      </div>
-                      <p className="font-bold text-slate-900 text-sm sm:text-base truncate">{shipment.origin.city}</p>
-                      <p className="text-[10px] sm:text-xs text-slate-400 font-medium truncate">{shipment.origin.date || 'Departed'}</p>
-                    </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Origin</span>
+                    <p className="text-base sm:text-xl font-bold text-slate-900 tracking-tight whitespace-nowrap">{shipment.origin.city}</p>
+                    <p className="text-[11px] text-slate-400 font-medium">{shipment.origin.date || 'Departed'}</p>
                   </div>
 
-                  {/* Visual Route Corridor Track */}
-                  <div className="flex-1 flex flex-col items-center px-1 sm:px-6 relative">
+                  {/* Clean Transit Line with Plane */}
+                  <div className="flex-1 flex flex-col items-center px-2 sm:px-6 max-w-[220px]">
                     <div className="w-full flex items-center relative py-2">
-                      <div className="h-1 w-full bg-slate-200/80 relative overflow-hidden rounded-full">
-                        <div className="absolute inset-y-0 left-0 bg-emerald-500 w-3/5 rounded-full animate-pulse"></div>
+                      <div className="h-[2px] w-full bg-slate-200 relative rounded-full">
+                        <div className="h-full bg-emerald-500 w-2/3 rounded-full"></div>
                       </div>
-                      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 size-7 sm:size-8 rounded-full bg-white border border-emerald-300 shadow-md flex items-center justify-center text-emerald-600">
-                        <span className="material-symbols-outlined text-[15px] sm:text-[18px] rotate-45">
+                      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 size-7 rounded-full bg-white border border-emerald-300 shadow-sm flex items-center justify-center text-emerald-600">
+                        <span className="material-symbols-outlined text-[16px] rotate-45">
                           {getTransportIcon(shipment.transportMode?.type)}
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1.5 mt-1">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200/70">
-                        <span className="size-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-                        En Route
-                      </span>
-                    </div>
+                    <span className="text-[10px] font-bold text-emerald-600 flex items-center gap-1 mt-0.5 whitespace-nowrap">
+                      <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      In Transit
+                    </span>
                   </div>
 
                   {/* Destination */}
-                  <div className="flex items-center gap-2 sm:gap-3 text-right min-w-0 flex-row-reverse">
-                    <div className="size-9 sm:size-11 rounded-xl bg-white border border-blue-200/90 shadow-xs flex items-center justify-center text-blue-600 shrink-0">
-                      <span className="material-symbols-outlined text-lg sm:text-xl">flight_land</span>
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center justify-end gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                        Destination <span className="size-1.5 rounded-full bg-blue-500"></span>
-                      </div>
-                      <p className="font-bold text-slate-900 text-sm sm:text-base truncate">{shipment.destination.city}</p>
-                      <p className="text-[10px] sm:text-xs text-slate-400 font-medium truncate">{shipment.destination.date || 'Pending'}</p>
-                    </div>
+                  <div className="text-right min-w-0">
+                    <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Destination</span>
+                    <p className="text-base sm:text-xl font-bold text-slate-900 tracking-tight whitespace-nowrap">{shipment.destination.city}</p>
+                    <p className="text-[11px] text-slate-400 font-medium">{shipment.destination.date || 'Pending'}</p>
                   </div>
-
                 </div>
               </div>
 
-              {/* 3 Balanced Spec Metrics: Est Delivery, Transport Mode, Location */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 p-4 sm:p-6 bg-white">
-                {/* 1. Est Delivery */}
-                <div className="py-3 sm:py-0 sm:px-4 sm:first:pl-0 flex items-center gap-3.5">
-                  <div className="size-10 rounded-xl bg-emerald-50/70 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                    <span className="material-symbols-outlined text-xl">calendar_month</span>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Est. Delivery</p>
-                    <p className="font-bold text-slate-900 text-sm truncate">{shipment.eta.date || 'Pending'}</p>
-                    <p className="text-[10px] text-slate-400 font-medium">{shipment.eta.time || 'Allcargo Priority SLA'}</p>
-                  </div>
+              {/* Specs: Clean, Simple & Modern Key-Value Layout */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-100 px-5 py-3 sm:px-8 sm:py-5 bg-white">
+                {/* 1. Est. Delivery */}
+                <div className="py-2.5 sm:py-0 sm:px-4 sm:first:pl-0 flex items-center justify-between sm:flex-col sm:items-start sm:gap-1">
+                  <span className="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[17px] text-slate-400">calendar_today</span>
+                    Est. Delivery
+                  </span>
+                  <span className="text-sm font-bold text-slate-900">{shipment.eta.date || 'Pending'}</span>
                 </div>
 
                 {/* 2. Transport Mode */}
-                <div className="py-3 sm:py-0 sm:px-4 flex items-center gap-3.5">
-                  <div className="size-10 rounded-xl bg-blue-50/70 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                    <span className="material-symbols-outlined text-xl">{getTransportIcon(shipment.transportMode?.type)}</span>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Transport Mode</p>
-                    <p className="font-bold text-slate-900 text-sm truncate">{shipment.transportMode.type}</p>
-                    <p className="text-[10px] text-slate-400 font-medium">{shipment.transportMode.carrier || 'Allcargo Fleet'}</p>
-                  </div>
+                <div className="py-2.5 sm:py-0 sm:px-4 flex items-center justify-between sm:flex-col sm:items-start sm:gap-1">
+                  <span className="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[17px] text-slate-400">{getTransportIcon(shipment.transportMode?.type)}</span>
+                    Transport Mode
+                  </span>
+                  <span className="text-sm font-bold text-slate-900">{shipment.transportMode.type}</span>
                 </div>
 
                 {/* 3. Live Position */}
-                <div className="py-3 sm:py-0 sm:px-4 sm:last:pr-0 flex items-center gap-3.5">
-                  <div className="size-10 rounded-xl bg-purple-50/70 border border-purple-100 flex items-center justify-center text-purple-600 shrink-0">
-                    <span className="material-symbols-outlined text-xl">near_me</span>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Current Coordinates</p>
-                    <p className="font-bold text-slate-900 text-sm truncate font-mono">{shipment.currentLocation.place}</p>
-                    <p className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
-                      <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                      Live GPS Signal
-                    </p>
-                  </div>
+                <div className="py-2.5 sm:py-0 sm:px-4 sm:last:pr-0 flex items-center justify-between sm:flex-col sm:items-start sm:gap-1">
+                  <span className="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[17px] text-slate-400">near_me</span>
+                    Current Location
+                  </span>
+                  <span className="text-sm font-bold text-slate-900 font-mono flex items-center gap-1.5">
+                    <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    {shipment.currentLocation.place}
+                  </span>
                 </div>
               </div>
             </div>
