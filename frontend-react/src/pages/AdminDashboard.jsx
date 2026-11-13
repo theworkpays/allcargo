@@ -80,6 +80,7 @@ export default function AdminDashboard() {
   const [logs, setLogs] = useState([]);
   const [mapCoords, setMapCoords] = useState({ origin: [0,0], dest: [0,0], current: null });
   const [planePos, setPlanePos] = useState([0,0]);
+  const [planeAngle, setPlaneAngle] = useState(0);
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
   const [targetPosition, setTargetPosition] = useState({ coordinates: [0, 0], zoom: 1 });
 
@@ -132,6 +133,11 @@ export default function AdminDashboard() {
   useEffect(() => {
      if (!selectedShipment) return;
      
+     const [oLng, oLat] = mapCoords.origin;
+     const [dLng, dLat] = mapCoords.dest;
+     const heading = (Math.atan2(dLng - oLng, dLat - oLat) * 180) / Math.PI;
+     setPlaneAngle(heading);
+
      const isTransit = selectedShipment.status === 'In Transit';
      
      if (!isTransit) {
@@ -157,9 +163,6 @@ export default function AdminDashboard() {
      const animate = (timestamp) => {
         if (!start) start = timestamp;
         const progress = ((timestamp - start) % duration) / duration; 
-        
-        const [oLng, oLat] = mapCoords.origin;
-        const [dLng, dLat] = mapCoords.dest;
         
         const lng = oLng + (dLng - oLng) * progress;
         const lat = oLat + (dLat - oLat) * progress;
@@ -846,10 +849,22 @@ export default function AdminDashboard() {
                             </Marker>
                             
                             <Marker coordinates={planePos}>
-                              <g transform="translate(-10, -10)">
-                                 <circle cx="10" cy="10" r="12" fill="#fff" stroke="#cbd5e1" strokeWidth="1" />
-                                 <path d="M9.5,4L9.5,10.5L14,12L14,13.5L9.5,12L9.5,15.5L10.5,16.5L10.5,17.5L8,16.5L5.5,17.5L5.5,16.5L6.5,15.5L6.5,12L2,13.5L2,12L6.5,10.5L6.5,4C6.5,3.17 7.17,2.5 8,2.5C8.83,2.5 9.5,3.17 9.5,4Z" 
-                                       fill={selectedShipment.status === 'Customs Hold' ? '#f59e0b' : selectedShipment.status === 'Delivered' ? '#64748b' : '#10b981'} />
+                              <g transform="translate(-16, -16)">
+                                 {selectedShipment.status === 'In Transit' && (
+                                   <circle cx="16" cy="16" r="15" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.4">
+                                      <animate attributeName="r" from="15" to="24" dur="2s" repeatCount="indefinite" />
+                                      <animate attributeName="opacity" from="0.5" to="0" dur="2s" repeatCount="indefinite" />
+                                   </circle>
+                                 )}
+                                 <circle cx="16" cy="16" r="15" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" className="shadow-md" />
+                                 <g transform={`rotate(${planeAngle}, 16, 16)`}>
+                                   <g transform="translate(4, 4)">
+                                     <path 
+                                       d="M12,1.5 C11.5,1.5 10.9,2.8 10.9,5.5 L10.9,9.2 L2.2,14.6 C1.8,14.8 1.6,15.3 1.7,15.7 C1.9,16.2 2.4,16.5 2.9,16.4 L10.9,14.2 L10.9,19.2 L7.8,21.6 C7.5,21.8 7.3,22.2 7.4,22.6 C7.5,23.0 7.9,23.3 8.3,23.2 L12,22.4 L15.7,23.2 C16.1,23.3 16.5,23.0 16.6,22.6 C16.7,22.2 16.5,21.8 16.2,21.6 L13.1,19.2 L13.1,14.2 L21.1,16.4 C21.6,16.5 22.1,16.2 22.3,15.7 C22.4,15.3 22.2,14.8 21.8,14.6 L13.1,9.2 L13.1,5.5 C13.1,2.8 12.5,1.5 12,1.5 Z" 
+                                       fill={selectedShipment.status === 'Customs Hold' ? '#f59e0b' : selectedShipment.status === 'Delivered' ? '#64748b' : '#10b981'} 
+                                     />
+                                   </g>
+                                 </g>
                               </g>
                             </Marker>
                           </>
