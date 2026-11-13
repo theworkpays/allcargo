@@ -232,7 +232,9 @@ export default function Tracking() {
           weight: foundLocal.weight,
           serviceType: foundLocal.serviceType,
           packageName: foundLocal.packageName,
-          packageImage: foundLocal.packageImage
+          packageImage: foundLocal.packageImage,
+          packageMediaType: foundLocal.packageMediaType || (typeof foundLocal.packageImage === 'string' && (foundLocal.packageImage.startsWith('data:video') || foundLocal.packageImage.match(/\.(mp4|webm|mov|m4v|ogg)($|\?)/i)) ? 'video' : 'image'),
+          packageMediaName: foundLocal.packageMediaName
         });
         } else {
           setShipment(null);
@@ -464,13 +466,49 @@ export default function Tracking() {
               
               {/* Package Media Card */}
               {shipment.packageImage && (
-                <div className="bg-white rounded-3xl shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-slate-100 p-6 flex flex-col">
-                  <h3 className="text-lg font-bold text-slate-900 mb-4">Package Media</h3>
-                  <div className="w-full h-64 rounded-2xl overflow-hidden border border-slate-100 shadow-sm relative group cursor-pointer" onClick={() => window.open(shipment.packageImage, '_blank')}>
-                    <img src={shipment.packageImage} alt="Package" className="w-full h-full object-cover transition-transform hover:scale-105 duration-500" />
-                    <div className="absolute inset-0 bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                       <span className="material-symbols-outlined text-white text-3xl drop-shadow-md">zoom_in</span>
+                <div className="bg-white rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-slate-100 p-5 sm:p-6 flex flex-col justify-between">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2.5">
+                      <div className="size-9 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100/80 shadow-xs">
+                        <span className="material-symbols-outlined text-lg">
+                          {shipment.packageMediaType === 'video' ? 'videocam' : 'photo_library'}
+                        </span>
+                      </div>
+                      <div>
+                        <h3 className="text-base font-bold text-slate-900 leading-tight">Cargo Media</h3>
+                        <p className="text-[11px] font-medium text-slate-400">
+                          {shipment.packageMediaType === 'video' ? 'Inspection video stream' : 'Digital package inspection'}
+                        </p>
+                      </div>
                     </div>
+                    <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      {shipment.packageMediaType === 'video' ? 'VERIFIED VIDEO' : 'VERIFIED PHOTO'}
+                    </span>
+                  </div>
+
+                  <div className="w-full h-64 sm:h-72 rounded-2xl overflow-hidden border border-slate-100 shadow-sm relative group bg-slate-900 flex items-center justify-center">
+                    {shipment.packageMediaType === 'video' ? (
+                      <video 
+                        src={shipment.packageImage} 
+                        controls 
+                        playsInline
+                        className="w-full h-full object-cover rounded-2xl" 
+                      />
+                    ) : (
+                      <div className="w-full h-full cursor-pointer relative" onClick={() => window.open(shipment.packageImage, '_blank')}>
+                        <img 
+                          src={shipment.packageImage} 
+                          alt="Cargo item" 
+                          className="w-full h-full object-cover transition-transform hover:scale-105 duration-500" 
+                        />
+                        <div className="absolute inset-0 bg-slate-900/15 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <div className="size-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg text-slate-900">
+                            <span className="material-symbols-outlined text-xl">zoom_in</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
