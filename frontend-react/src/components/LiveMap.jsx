@@ -68,7 +68,12 @@ export default function LiveMap({
   useEffect(() => {
     if (origin && destination) {
        const mid = [(origin[0] + destination[0])/2, (origin[1] + destination[1])/2];
-       setTargetPosition({ coordinates: mid, zoom: 2.2 });
+       setTargetPosition(prev => {
+         if (prev.coordinates[0] === mid[0] && prev.coordinates[1] === mid[1] && prev.zoom === 2.2) {
+           return prev;
+         }
+         return { coordinates: mid, zoom: 2.2 };
+       });
     }
   }, [origin, destination]);
 
@@ -87,12 +92,12 @@ export default function LiveMap({
           Math.abs(nextY - targetPosition.coordinates[1]) < 0.01 &&
           Math.abs(nextZoom - targetPosition.zoom) < 0.01
         ) {
-          return targetPosition; 
+          return prev; 
         }
         
+        animationFrameId = requestAnimationFrame(animate);
         return { coordinates: [nextX, nextY], zoom: nextZoom };
       });
-      animationFrameId = requestAnimationFrame(animate);
     };
     
     animate();

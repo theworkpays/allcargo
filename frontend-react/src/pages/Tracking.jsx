@@ -475,57 +475,86 @@ export default function Tracking() {
               )}
               
               {/* Detailed Specs Card */}
-              <div className={`bg-white rounded-3xl shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-slate-100 p-6 flex flex-col ${shipment.packageImage ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
-                 <h3 className="text-lg font-bold text-slate-900 mb-6">Manifest Details</h3>
-                 
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-grow">
-                   {/* Logistics */}
-                   <div className="space-y-6">
-                     <div className="flex items-start gap-4">
-                       <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0">
-                          <span className="material-symbols-outlined text-primary">person</span>
-                       </div>
-                       <div>
-                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">Sender</p>
-                         <p className="text-sm font-bold text-slate-900">{shipment.senderName || 'Confidential'}</p>
-                         <p className="text-xs font-medium text-slate-500 mt-1">{shipment.origin.city}</p>
-                       </div>
-                     </div>
-                     <div className="h-px w-full bg-slate-50"></div>
-                     <div className="flex items-start gap-4">
-                       <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0">
-                          <span className="material-symbols-outlined text-primary">storefront</span>
-                       </div>
-                       <div>
-                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">Receiver</p>
-                         <p className="text-sm font-bold text-slate-900">{shipment.receiverName || 'Confidential'}</p>
-                         <p className="text-xs font-medium text-slate-500 mt-1 max-w-[250px] leading-relaxed">{shipment.receiverAddress || shipment.destination.city}</p>
-                       </div>
-                     </div>
-                   </div>
+              <div className={`bg-white rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-slate-100 p-6 sm:p-8 flex flex-col justify-between ${shipment.packageImage ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
+                
+                {/* Header */}
+                <div className="flex items-center justify-between pb-5 border-b border-slate-100">
+                  <div className="flex items-center gap-3">
+                    <div className="size-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shadow-xs">
+                      <span className="material-symbols-outlined text-xl">description</span>
+                    </div>
+                    <div>
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">Manifest Details</h3>
+                      <p className="text-xs text-slate-400 font-medium">Bill of lading & consignee declaration</p>
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-slate-500 bg-slate-50 border border-slate-200/70 px-2.5 py-1 rounded-lg">
+                    {shipment.id}
+                  </span>
+                </div>
 
-                   {/* Specs */}
-                   <div className="space-y-6">
-                     <div>
-                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Service Level</p>
-                       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-slate-700 font-bold text-xs shadow-sm">
-                         <span className="material-symbols-outlined text-[16px] text-primary">local_shipping</span>
-                         {shipment.serviceType || 'Standard Freight'}
-                       </div>
-                     </div>
-                     <div className="h-px w-full bg-slate-50"></div>
-                     <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Contents</p>
-                          <p className="text-sm font-bold text-slate-900">{shipment.packageName || 'Standard Cargo'}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Gross Weight</p>
-                          <p className="text-sm font-bold text-slate-900">{shipment.weight || 'Pending'}</p>
-                        </div>
-                     </div>
-                   </div>
-                 </div>
+                {/* Parties: Sender & Receiver */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5 border-b border-slate-100">
+                  {/* Sender */}
+                  <div className="bg-slate-50/60 border border-slate-100 rounded-2xl p-4 flex items-start gap-3.5">
+                    <div className="size-9 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-500 shrink-0 shadow-2xs">
+                      <span className="material-symbols-outlined text-[18px]">flight_takeoff</span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Sender / Consignor</span>
+                      <p className="text-sm font-bold text-slate-900 truncate">{shipment.senderName || 'Authorized Consignor'}</p>
+                      <p className="text-xs text-slate-500 font-medium truncate mt-0.5">{shipment.origin.city}</p>
+                    </div>
+                  </div>
+
+                  {/* Receiver */}
+                  <div className="bg-slate-50/60 border border-slate-100 rounded-2xl p-4 flex items-start gap-3.5">
+                    <div className="size-9 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-500 shrink-0 shadow-2xs">
+                      <span className="material-symbols-outlined text-[18px]">flight_land</span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Receiver / Consignee</span>
+                      <p className="text-sm font-bold text-slate-900 truncate">{shipment.receiverName || 'Authorized Consignee'}</p>
+                      <p className="text-xs text-slate-500 font-medium truncate mt-0.5">{shipment.receiverAddress || shipment.destination.city}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Cargo Specifications 4-Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-5">
+                  {/* Service Level */}
+                  <div className="bg-slate-50/50 rounded-2xl p-3.5 border border-slate-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Service Level</span>
+                    <p className="text-xs sm:text-sm font-bold text-slate-900 truncate flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[15px] text-emerald-600">{getTransportIcon(shipment.transportMode?.type)}</span>
+                      {shipment.serviceType || 'Priority Express'}
+                    </p>
+                  </div>
+
+                  {/* Contents */}
+                  <div className="bg-slate-50/50 rounded-2xl p-3.5 border border-slate-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Contents</span>
+                    <p className="text-xs sm:text-sm font-bold text-slate-900 truncate">{shipment.packageName || 'Standard Cargo'}</p>
+                  </div>
+
+                  {/* Gross Weight */}
+                  <div className="bg-slate-50/50 rounded-2xl p-3.5 border border-slate-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Gross Weight</span>
+                    <p className="text-xs sm:text-sm font-bold text-slate-900 truncate font-mono">
+                      {shipment.weight ? (String(shipment.weight).toLowerCase().includes('kg') || String(shipment.weight).toLowerCase().includes('lbs') ? shipment.weight : `${shipment.weight} kg`) : 'Pending'}
+                    </p>
+                  </div>
+
+                  {/* Customs / Declaration */}
+                  <div className="bg-slate-50/50 rounded-2xl p-3.5 border border-slate-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Declaration</span>
+                    <p className="text-xs sm:text-sm font-bold text-emerald-600 flex items-center gap-1">
+                      <span className="size-1.5 rounded-full bg-emerald-500"></span>
+                      Cleared
+                    </p>
+                  </div>
+                </div>
+
               </div>
 
             </div>
