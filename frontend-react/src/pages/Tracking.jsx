@@ -446,17 +446,35 @@ export default function Tracking() {
                
                {/* Left: Map Card */}
                <div className="lg:col-span-2 bg-white rounded-3xl shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-slate-100 p-6 flex flex-col relative h-[450px] overflow-hidden">
-                 <h3 className="text-lg font-bold text-slate-900 mb-4 z-20">Live Shipment Map</h3>
+                 <div className="flex items-center justify-between mb-4 z-20">
+                    <div className="flex items-center gap-2.5">
+                      <div className="size-9 bg-green-50 rounded-xl flex items-center justify-center text-green-500 border border-green-100">
+                        <span className="material-symbols-outlined text-lg">public</span>
+                      </div>
+                      <div>
+                        <h3 className="text-base font-bold text-slate-900 leading-tight">Live Shipment Map</h3>
+                        <p className="text-[11px] font-medium text-slate-400">Real-time transit routing & status</p>
+                      </div>
+                    </div>
+                    {/* Origin to Destination Route Pill Badge */}
+                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-slate-700">
+                      <span className="text-green-600">{shipment.origin?.city || shipment.origin}</span>
+                      <span className="material-symbols-outlined text-[14px] text-slate-400">flight_takeoff</span>
+                      <span className="text-blue-600">{shipment.destination?.city || shipment.destination}</span>
+                    </div>
+                  </div>
                  
                  <div className="flex-grow w-full h-full relative">
                    <LiveMap 
-                     origin={shipment.coordinates.origin} 
-                     destination={shipment.coordinates.destination} 
-                     current={shipment.coordinates.current} 
-                     carrier={shipment.transportMode.carrier} 
-                     type={shipment.transportMode.type}
-                     status={shipment.status}
-                   />
+                      origin={shipment.coordinates.origin} 
+                      destination={shipment.coordinates.destination} 
+                      originName={shipment.origin?.city || shipment.origin}
+                      destinationName={shipment.destination?.city || shipment.destination}
+                      current={shipment.coordinates.current} 
+                      carrier={shipment.transportMode.carrier} 
+                      type={shipment.transportMode.type} 
+                      status={shipment.status}
+                    />
                  </div>
                </div>
 

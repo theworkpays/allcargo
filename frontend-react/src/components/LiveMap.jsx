@@ -5,7 +5,16 @@ import { geoInterpolate } from 'd3-geo';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-export default function LiveMap({ origin, destination, current, carrier, type = 'Air Freight', status = 'In Transit' }) {
+export default function LiveMap({ 
+  origin, 
+  destination, 
+  originName, 
+  destinationName, 
+  current, 
+  carrier, 
+  type = 'Air Freight', 
+  status = 'In Transit' 
+}) {
   const [position, setPosition] = useState({ coordinates: [0, 20], zoom: 1.2 });
   const [targetPosition, setTargetPosition] = useState({ coordinates: [0, 20], zoom: 1.2 });
   const [vehiclePos, setVehiclePos] = useState(origin || [0,0]);
@@ -156,9 +165,9 @@ export default function LiveMap({ origin, destination, current, carrier, type = 
                     <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" fill="#10b981" stroke="#fff" strokeWidth={1.5} />
                     <circle cx="12" cy="10" r="3" fill="#fff" />
                   </g>
-                  <foreignObject x="-50" y="8" width="100" height="40" style={{ overflow: 'visible' }}>
-                      <div className="bg-white px-2 py-1 rounded-md shadow-md border border-slate-100 text-[10px] font-bold text-slate-900 text-center leading-tight mx-auto max-w-[80px]">
-                        Origin
+                  <foreignObject x="-60" y="8" width="120" height="48" style={{ overflow: 'visible' }}>
+                      <div className="bg-white px-2 py-1 rounded-md shadow-md border border-slate-100 text-[10px] font-bold text-slate-900 text-center leading-tight mx-auto max-w-[95px] whitespace-normal">
+                        {originName || 'Origin'}<br/><span className="text-slate-400 font-normal">Origin</span>
                       </div>
                   </foreignObject>
                 </Marker>
@@ -169,21 +178,19 @@ export default function LiveMap({ origin, destination, current, carrier, type = 
                     <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" fill="#3b82f6" stroke="#fff" strokeWidth={1.5} />
                     <circle cx="12" cy="10" r="3" fill="#fff" />
                   </g>
-                  <foreignObject x="-50" y="8" width="100" height="40" style={{ overflow: 'visible' }}>
-                      <div className="bg-white px-2 py-1 rounded-md shadow-md border border-slate-100 text-[10px] font-bold text-slate-900 text-center leading-tight mx-auto max-w-[80px]">
-                        Destination
+                  <foreignObject x="-60" y="8" width="120" height="48" style={{ overflow: 'visible' }}>
+                      <div className="bg-white px-2 py-1 rounded-md shadow-md border border-slate-100 text-[10px] font-bold text-slate-900 text-center leading-tight mx-auto max-w-[95px] whitespace-normal">
+                        {destinationName || 'Destination'}<br/><span className="text-slate-400 font-normal">Destination</span>
                       </div>
                   </foreignObject>
                 </Marker>
                 
                 {/* Vehicle Marker */}
                 <Marker coordinates={vehiclePos}>
-                  <g>
-                      <circle cx="0" cy="0" r="6" fill={status === 'Customs Hold' ? '#f59e0b' : status === 'Delivered' ? '#64748b' : '#10b981'} />
-                      <circle cx="0" cy="0" r="14" fill={status === 'Customs Hold' ? '#f59e0b' : status === 'Delivered' ? '#64748b' : '#10b981'} opacity="0.3">
-                         {status === 'In Transit' && <animate attributeName="r" from="6" to="24" dur="1.5s" repeatCount="indefinite" />}
-                         {status === 'In Transit' && <animate attributeName="opacity" from="0.5" to="0" dur="1.5s" repeatCount="indefinite" />}
-                      </circle>
+                  <g transform="translate(-10, -10)">
+                     <circle cx="10" cy="10" r="12" fill="#fff" stroke="#cbd5e1" strokeWidth="1" className="shadow-sm" />
+                     <path d="M9.5,4L9.5,10.5L14,12L14,13.5L9.5,12L9.5,15.5L10.5,16.5L10.5,17.5L8,16.5L5.5,17.5L5.5,16.5L6.5,15.5L6.5,12L2,13.5L2,12L6.5,10.5L6.5,4C6.5,3.17 7.17,2.5 8,2.5C8.83,2.5 9.5,3.17 9.5,4Z" 
+                           fill={status === 'Customs Hold' ? '#f59e0b' : status === 'Delivered' ? '#64748b' : '#10b981'} />
                   </g>
                 </Marker>
               </>
