@@ -564,22 +564,34 @@ export default function Tracking() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                
                {/* Left: Map Card */}
-               <div className="lg:col-span-2 bg-white rounded-3xl shadow-[0_4px_25px_rgba(0,0,0,0.03)] border border-slate-100 p-6 flex flex-col relative h-[450px] overflow-hidden">
-                 <div className="flex items-center justify-between mb-4 z-20">
-                    <div className="flex items-center gap-2.5">
-                      <div className="size-9 bg-green-50 rounded-xl flex items-center justify-center text-green-500 border border-green-100">
-                        <span className="material-symbols-outlined text-lg">public</span>
+               <div className="lg:col-span-2 bg-white rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-slate-100 p-4 sm:p-6 flex flex-col relative h-[440px] sm:h-[480px] overflow-hidden">
+                 <div className="flex items-center justify-between mb-3 sm:mb-4 z-20 pb-3 border-b border-slate-100/80">
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <div className="size-9 sm:size-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100/80 shadow-xs shrink-0">
+                        <span className="material-symbols-outlined text-lg sm:text-xl">public</span>
                       </div>
                       <div>
-                        <h3 className="text-base font-bold text-slate-900 leading-tight">Live Shipment Map</h3>
-                        <p className="text-[11px] font-medium text-slate-400">Real-time transit routing & status</p>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-tight">Live Shipment Map</h3>
+                          <span className="inline-flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-extrabold bg-emerald-50 text-emerald-600 border border-emerald-200/60">
+                            <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            LIVE
+                          </span>
+                        </div>
+                        <p className="text-[11px] font-medium text-slate-400 mt-0.5">Real-time satellite GPS telemetry</p>
                       </div>
                     </div>
-                    {/* Origin to Destination Route Pill Badge */}
-                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold text-slate-700">
-                      <span className="text-green-600">{shipment.origin?.city || shipment.origin}</span>
-                      <span className="material-symbols-outlined text-[14px] text-slate-400">flight_takeoff</span>
-                      <span className="text-blue-600">{shipment.destination?.city || shipment.destination}</span>
+                    {/* Origin to Destination Route Pill Badge (Adaptive for Mobile & Desktop) */}
+                    <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-slate-50/80 border border-slate-200/70 rounded-xl text-[11px] sm:text-xs font-bold text-slate-700 shadow-2xs">
+                      <span className="text-emerald-600 truncate max-w-[65px] sm:max-w-none font-bold">
+                        {(shipment.origin?.city || shipment.origin || 'Origin').split(',')[0]}
+                      </span>
+                      <span className="material-symbols-outlined text-[13px] sm:text-[15px] text-slate-400">
+                        {shipment.transportMode?.type?.toLowerCase().includes('sea') || shipment.transportMode?.type?.toLowerCase().includes('ocean') ? 'directions_boat' : 'flight_takeoff'}
+                      </span>
+                      <span className="text-blue-600 truncate max-w-[65px] sm:max-w-none font-bold">
+                        {(shipment.destination?.city || shipment.destination || 'Destination').split(',')[0]}
+                      </span>
                     </div>
                   </div>
                  
